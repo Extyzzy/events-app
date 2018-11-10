@@ -33,10 +33,4 @@ class Events extends Component {
   }
 }
 
-function mapStateToProps(store) {
-  return {
-    isAuthenticated: store.auth.isAuthenticated,
-  };
-}
-
-export default connect(mapStateToProps)(Events);
+export default Events;
