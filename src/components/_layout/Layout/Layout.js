@@ -1,16 +1,10 @@
 import classes from 'classnames';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Layout.scss';
 import Header from '../Header';
-import HeaderMobile from '../Header/HeaderMobile';
 import Footer from '../Footer';
-import Sidebar from '../Sidebar';
-import AdsBar from '../AdsBar';
-import SidebarMobile from '../Sidebar/Mobile/SidebarMobileContainer';
 import { connect } from 'react-redux';
-import { MOBILE_VERSION } from '../../../actions/app';
 
 class Layout extends Component {
   static propTypes = {
@@ -28,15 +22,10 @@ class Layout extends Component {
 
   render() {
     const {
-      UIVersion,
-      viewSwitchMode,
-      profile,
       hasSidebar,
-      hasAds,
       children,
       content,
       contentHasBackground,
-      whichSidebar,
     } = this.props;
 
     document.body.style.overflowY = "scroll";
@@ -44,44 +33,18 @@ class Layout extends Component {
     return (
       <div className={s.root}>
         <div className={s.wrap}>
-          {
-            (UIVersion !== MOBILE_VERSION && (
-              <Header />
-            )) || (
-              <HeaderMobile MenuItems={hasSidebar} />
-            )
-          }
+
+          <Header />
 
           <main className={classes(s.container, 'container', {
             [s.withSidebar]: hasSidebar,
           })}>
-            {
-              hasSidebar && (
-                (UIVersion === MOBILE_VERSION && (
-                  <div className={s.sidebar}>
-                    <SidebarMobile
-                      profile={profile}
-                      viewSwitchMode={viewSwitchMode}
-                      whichSidebar={whichSidebar}
-                    />
-                  </div>
-                )) || (
-                  <div className={s.sidebar}>
-                    <Sidebar profile={profile}/>
-                  </div>
-                )
-              )
-            }
-            <div className={classes(s.content, {
+
+            <div className={classes('content', {
               [s.contentBackground]: contentHasBackground,
             })}>
               {children || content}
             </div>
-            {
-              hasAds && UIVersion !== MOBILE_VERSION && (
-                <AdsBar />
-              )
-            }
           </main>
           <Footer className="text-center" />
         </div>
@@ -100,4 +63,4 @@ Layout.contextTypes = {
   router: PropTypes.any.isRequired,
 };
 
-export default (connect(mapStateToProps)(withStyles(s)(Layout)));
+export default (connect(mapStateToProps)(Layout));

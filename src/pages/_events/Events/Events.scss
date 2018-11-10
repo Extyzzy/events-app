@@ -1,0 +1,32 @@
+
+
+.root {
+  padding: 5px 15px 15px;
+}
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.header {
+  height: 45px;
+  .loader {
+    position: absolute;
+  }
+}
+
+.mapElement,
+.containerElement {
+  height: 100%;
+}
+
+.divMap {
+  height: 600px;
+}
+
+.viewModeSwitcher {
+  width: 75px;
+  display: inline-block;
+}

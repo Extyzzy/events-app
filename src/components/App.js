@@ -9,19 +9,18 @@ import {
 
 import { PrivateRoute } from "../core/Router";
 import Loader from './Loader';
-import Bundle from '../core/Bundle';
+
 
 /* eslint-disable */
-import PageNotFound from 'bundle-loader?lazy!../pages/_errors/PageNotFound';
-import Home from 'bundle-loader?lazy!../pages/Home';
+import PageNotFound from '../pages/_errors/PageNotFound';
+import Home from '../pages/Home';
 /* eslint-enable */
 
-import ProfileSwitch from '../pages/_profile/Switch';
+
 import EventsSwitch from '../pages/_events/Switch';
 import { AuthRoutes } from '../pages/_auth/Switch';
 
-const PageNotFoundBundle = Bundle.generateBundle(PageNotFound);
-const HomeBundle = Bundle.generateBundle(Home);
+
 
 const ContextType = {
   // Enables critical path CSS rendering
@@ -78,11 +77,11 @@ class App extends Component {
 
     return (
       <Switch>
-        <Route path="/" exact component={HomeBundle} />
-        <PrivateRoute isAuthenticated={isAuthenticated} path="/profile" component={ProfileSwitch} />
+        <Route path="/" exact component={Home} />
+
         <Route path="/events" component={EventsSwitch} />,
         {AuthRoutes}
-        <Route component={PageNotFoundBundle} />
+        <Route component={PageNotFound} />
       </Switch>
     );
   }

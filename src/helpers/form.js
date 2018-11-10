@@ -1,5 +1,4 @@
 import { isEqual, isNil } from 'lodash';
-import { confirm } from '../components/_popup/Confirm';
 import {SilencedError} from "../exceptions/errors";
 
 /**
@@ -81,27 +80,3 @@ export function didFormDataHasChanged(initialFormData, currentFormState) {
  * @param _this, The object reference where is stored the state
  * @param param, The object property key where is stored the state
  */
-export const catchAccidentalFormClose = (_this, param = '__formDataHasChanged') => (
-  (resolve, reject) => {
-    if (_this[param]) {
-      confirm("There are some changes, are you sure you want to close the dialog?", {
-        omitOverflow: true,
-      })
-      .then(
-        () => {
-          resolve();
-        },
-        () => {
-          reject(
-            new SilencedError(
-              'User chose to not close the dialog.'
-            )
-          );
-        }
-      );
-    }
-    else {
-      resolve();
-    }
-  }
-);
