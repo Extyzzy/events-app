@@ -1,6 +1,5 @@
 import classes from 'classnames';
 import React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import './Loader.scss';
 
 const Loader = ({className, sm, contrast}) => (
@@ -11,4 +10,4 @@ const Loader = ({className, sm, contrast}) => (
   />
 );
 
-export default withStyles(s)(Loader);
+export default Loader;

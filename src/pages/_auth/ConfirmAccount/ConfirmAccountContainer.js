@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { I18n } from 'react-redux-i18n';
+
 import { withRouter } from 'react-router';
 
 import ConfirmAccount from './ConfirmAccount';
@@ -49,7 +49,7 @@ class ConfirmAccountContainer extends Component {
             return response.json().then(({message}) => {
               this.setState({
                 isLoading: false,
-                error: I18n.t('auth.confirmAccount.failedMessage'),
+                error: 'failed',
               });
 
               return Promise.reject(
@@ -61,7 +61,7 @@ class ConfirmAccountContainer extends Component {
 
             this.setState({
               isLoading: false,
-              error: I18n.t('auth.errorMessages.criticalError'),
+              error: 'Eroare',
             });
 
             return Promise.reject(
