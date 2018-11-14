@@ -1,150 +1,77 @@
-@import '../../../styles/app';
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
 
-.root {
-  border-bottom: 1px solid $primary-gray;
-  background-color: $primary-white;
-  box-shadow: 0 0 18px -3px #000;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.brand {
-  width: 200px;
-  height: 59px;
-  padding: 7px 45px;
-
-  img {
-    height: 45px;
-    width: 110px;
-  }
+.nav {
+  border-bottom: 1px solid #707070;
+  height: 64px;
+  width: 100%;
 }
 
-.categories {
-  width: 490px;
+.nav__container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 1280px;
 
-  & > li {
-    & > a {
-      display: flex;
+  h1 {
+    color: #707070;
+    font-family: 'Rubik';
+    font-size: 16px;
+    font-weight: 700;
 
-      & > i {
-        font-size: 30px;
-
-        &::before {
-          -webkit-font-smoothing: subpixel-antialiased;
-          -moz-osx-font-smoothing: inherit;
-        }
-      }
-
-      & > span {
-        align-self: center;
-        display: none;
-        padding-left: 5px;
-      }
-    }
-
-    &.active {
-      &:hover > a,
-      & > a:focus,
-      & > a {
-        background-color: $brand-success;
-        color: $primary-white;
-        padding-left: 15px;
-        padding-right: 30px;
-
-        & > span {
-          display: initial;
-        }
-      }
+    span {
+      font-weight: 500;
+      text-transform: uppercase;
     }
   }
 }
 
-.searchAndProfile {
-  margin-right: 15px;
+.nav__menu {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  width: 600px;
 
-  .headerDropdown {
-    display: inline-flex;
-    margin: 0;
-    width: 225px;
-    height: 59px;
+  .nav__menu-item {
 
-    & > a {
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      padding: 0!important;
-      width: 100%;
-      background-color: $body-bg;
-
-      &:hover {
-        background-color: $brand-success!important;
-      }
-
-      & > span {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 45px;
-        margin: 7px;
-        justify-content: center;
-        align-items: center;
-
-        & > i {
-          width: 40px;
-          height: 40px;
-          padding: 3px 3px;
-          border: 1px solid $primary-gray;
-          border-radius: 50%;
-          font-size: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          &::before {
-            -webkit-font-smoothing: subpixel-antialiased;
-            -moz-osx-font-smoothing: inherit;
-          }
-        }
-
-        & > img {
-          width: 45px;
-          height: 45px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        & > span {
-          width: calc(100% - 45px);
-          padding-left: 9px;
-          display: inline-flex;
-          align-items: center;
-        }
-      }
-    }
-
-    &.open {
-      & > a {
-        width: 100%;
-        background-color: $brand-success !important;
-        color: $primary-white !important;
-
-        & > span i {
-          border-color: $primary-white;
-        }
-      }
-
-      & > ul {
-        border-color: $primary-white;
-        border-bottom-left-radius: 0;
-      }
-    }
-  }
-
-  .activeMenuItem {
-    & > a:hover {
-      color: black !important;
+    .nav__menu-link {
+      color: #707070;
+      font-family: 'Roboto';
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.025em;
+      text-decoration: none;
+      text-transform: uppercase;
     }
   }
 }
 
-.nav > li > a {
-  padding: 13px 3px !important;
+.nav__auth {
+  .nav__link,
+  .nav__button {
+    color: #707070;
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav__button {
+    background-color: #707070;
+    border-radius: 3px;
+    color: #ffffff;
+    display: inline-block;
+    margin-right: 30px;
+    padding: 10px 18px;
+  }
 }

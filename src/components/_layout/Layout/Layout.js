@@ -33,20 +33,7 @@ class Layout extends Component {
     return (
       <div className={s.root}>
         <div className={s.wrap}>
-
           <Header />
-
-          <main className={classes(s.container, 'container', {
-            [s.withSidebar]: hasSidebar,
-          })}>
-
-            <div className={classes('content', {
-              [s.contentBackground]: contentHasBackground,
-            })}>
-              {children || content}
-            </div>
-          </main>
-          <Footer className="text-center" />
         </div>
       </div>
     );

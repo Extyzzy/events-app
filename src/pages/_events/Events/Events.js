@@ -26,9 +26,9 @@ class Events extends Component {
     } = this.props;
 
     return (
-        <div className='root'>
-          Events
-       </div>
+      <div className='root'>
+      events
+      </div>
     );
   }
 }

@@ -3,6 +3,8 @@ import Layout from "../../components/_layout/Layout";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import Header from '../../components/_layout/Header/Header';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ class Home extends Component {
 
     console.log(isAuthenticated);
     console.info(this.props.test);
-    return (+
+    return (
       <>
         <h1>Home {children}</h1>
       </>
