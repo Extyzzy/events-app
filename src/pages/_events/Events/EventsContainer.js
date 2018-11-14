@@ -12,13 +12,8 @@ class EventsContainer extends Component {
     };
   }
 
-  componentDidMount() {
-    const { location } = this.props;
-
-  }
-
   render() {
-
+      console.info(this.props);
     return (
       <Events
 

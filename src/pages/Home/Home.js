@@ -1,10 +1,21 @@
-import React  from "react";
-import Layout from "../../components/_layout/Layout";
+import React , {Component} from "react";
+import PropTypes from "prop-types";
 
-const Home = () => (
-    <div className='root'>
-      HOME
-    </div>
-);
+class Home extends Component {
+    render() {
+        const {
+            hey
+        } = this.props;
+
+        console.info(hey);
+
+        return (
+            <div className='root'>
+
+            </div>
+        );
+    }
+}
 
 export default Home;
+
