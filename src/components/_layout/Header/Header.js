@@ -66,8 +66,8 @@ class Header extends Component {
           </menu>
 
           <div className="nav__auth">
-            <a href="#" className="nav__button">Sign Up</a>
-            <a href="#" className="nav__link">Log In</a>
+            <a onClick={() => history.push('/sign-up')} className="nav__button">Sign Up</a>
+            <a onClick={() => history.push('/log-in')} className="nav__link">Log in</a>
           </div>
         </div>
       </nav>

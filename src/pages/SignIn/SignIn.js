@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 
 import Header from '../../components/_layout/Header/Header';
 
-class Home extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
 
@@ -20,14 +20,13 @@ class Home extends Component {
     } = this.props;
 
     console.log(isAuthenticated);
-    console.info(this.props.test);
     return (
       <>
-        <h1>Home</h1>
+        <h1>Sign In Page</h1>
       </>
     );
   }
 }
 
-export default Home;
+export default SignIn;
 

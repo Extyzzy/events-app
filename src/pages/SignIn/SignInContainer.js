@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import Home from './Home';
+import SignIn from './SignIn';
 
-class HomeContainer extends Component {
+class SignInContainer extends Component {
+
   render() {
-    console.log('testing some stuff');
     return (
-      <Home 
-        isAuthenticated={this.props.isAuthenticated} 
+      <SignIn 
+        isAuthenticated={this.props.isAuthenticated}
         test='1'
       />
     );
@@ -23,4 +23,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(HomeContainer));
+export default withRouter(connect(mapStateToProps)(SignInContainer));

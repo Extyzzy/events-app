@@ -27,7 +27,9 @@ class Events extends Component {
 
     return (
       <div className='root'>
-      events
+        <h1>
+          Events
+        </h1>
       </div>
     );
   }

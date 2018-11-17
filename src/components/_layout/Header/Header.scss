@@ -75,3 +75,9 @@
     padding: 10px 18px;
   }
 }
+
+.nav__menu-item:hover,
+.nav__button:hover,
+.nav__link:hover {
+  cursor: pointer;
+}
