@@ -1,32 +1,24 @@
-import React , {Component} from "react";
-import Layout from "../../components/_layout/Layout";
-import { withRouter } from 'react-router';
+import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import Home from './Home';
 
-class Home extends Component {
-    render() {
-        const {
-            history,
-            cumVrei
-        } = this.props;
+class HomeContainer extends Component {
 
-        console.info(cumVrei);
-
-        return (
-            <div className='root'>
-                HOME
-                <br />
-                <span onClick={() => {history.push('/events', {utm: 'jenea'})}}>Click me</span>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <Home 
+        isAuthenticated={this.props.isAuthenticated}
+      />
+    );
+  }
 }
 
 function mapStateToProps(store) {
-    return {
-        cumVrei: store.auth.isAuthenticated,
-    };
+  return {
+    isAuthenticated: store.auth.isAuthenticated,
+  };
 }
 
-export default withRouter(connect(mapStateToProps)(Home));
+export default withRouter(connect(mapStateToProps)(HomeContainer));
 

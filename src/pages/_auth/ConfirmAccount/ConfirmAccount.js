@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './ConfirmAccount.scss';
-import Footer from '../../../components/_layout/Footer';
 
 class ConfirmAccount extends Component {
   static propTypes = {
@@ -22,9 +21,8 @@ class ConfirmAccount extends Component {
     } = this.props;
 
     return (
-      <div className='root'>
+      <div className='footer'>
 
-        <Footer className="text-center" />
       </div>
     );
   }

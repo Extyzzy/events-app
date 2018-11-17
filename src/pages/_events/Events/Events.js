@@ -26,17 +26,11 @@ class Events extends Component {
     } = this.props;
 
     return (
-        <div className='root'>
-          Events
-       </div>
+      <div className='root'>
+      events
+      </div>
     );
   }
 }
 
-function mapStateToProps(store) {
-  return {
-    isAuthenticated: store.auth.isAuthenticated,
-  };
-}
-
-export default connect(mapStateToProps)(Events);
+export default Events;

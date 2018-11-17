@@ -14,6 +14,7 @@ import Loader from './Loader';
 /* eslint-disable */
 import PageNotFound from '../pages/_errors/PageNotFound';
 import Home from '../pages/Home';
+import Layout from '../components/_layout/Layout';
 /* eslint-enable */
 
 
@@ -76,13 +77,15 @@ class App extends Component {
     }
 
     return (
-      <Switch>
-        <Route path="/" exact component={Home} />
+      <Layout>
+        <Switch>
+          <Route path="/" exact component={Home} />
 
-        <Route path="/events" component={EventsSwitch} />,
-        {AuthRoutes}
-        <Route component={PageNotFound} />
-      </Switch>
+          <Route path="/events" component={EventsSwitch} />,
+          {AuthRoutes}
+          <Route component={PageNotFound} />
+        </Switch>
+      </Layout>
     );
   }
 }

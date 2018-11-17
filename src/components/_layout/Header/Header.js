@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import './Header.scss';
+
 class Header extends Component {
   static propTypes = {
     sidebarToggle: PropTypes.func,
@@ -34,12 +36,41 @@ class Header extends Component {
 
     const {
       isAuthenticated,
+      history
     } = this.props;
 
+    console.log(history);
+    
+
     return (
-      <>
-        Hey
-      </>
+      <nav className="nav">
+        <div className="nav__container">
+          <h1>Events<span>BOOK</span></h1>
+
+          <menu className="nav__menu">
+            <li className="nav__menu-item">
+              <a href="#" className="nav__menu-link">Home</a>
+            </li>
+            <li className="nav__menu-item">
+              <a onClick={() => history.push('/events')} className="nav__menu-link">Events</a>
+            </li>
+            <li className="nav__menu-item">
+              <a href="#" className="nav__menu-link">Why EventsBook</a>
+            </li>
+            <li className="nav__menu-item">
+              <a href="#" className="nav__menu-link">News</a>
+            </li>
+            <li className="nav__menu-item">
+              <a href="#" className="nav__menu-link">Blog</a>
+            </li>
+          </menu>
+
+          <div className="nav__auth">
+            <a href="#" className="nav__button">Sign Up</a>
+            <a href="#" className="nav__link">Log In</a>
+          </div>
+        </div>
+      </nav>
     );
   }
 }
