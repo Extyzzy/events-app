@@ -7,9 +7,7 @@ class Home extends Component {
         } = this.props;
 
         return (
-            <div className='root'>
-
-            </div>
+            <h1>Hpome</h1>
         );
     }
 }
