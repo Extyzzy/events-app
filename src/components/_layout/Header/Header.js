@@ -49,7 +49,7 @@ class Header extends Component {
 
           <menu className="nav__menu">
             <li className="nav__menu-item">
-              <a href="#" className="nav__menu-link">Home</a>
+              <a onClick={() => history.push('/')} className="nav__menu-link">Home</a>
             </li>
             <li className="nav__menu-item">
               <a onClick={() => history.push('/events')} className="nav__menu-link">Events</a>
