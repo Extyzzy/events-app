@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import UserProfile from './UserProfile';
 
-import SignIn from './SignIn';
-
-class SignInContainer extends Component {
-
+class UserProfileContainer extends Component {
   render() {
     return (
-      <SignIn 
-        isAuthenticated={this.props.isAuthenticated}
-        test='1'
-      />
+      <UserProfile/>
     );
   }
 }
-
 
 function mapStateToProps(store) {
   return {
@@ -23,4 +17,5 @@ function mapStateToProps(store) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(SignInContainer));
+export default withRouter(connect(mapStateToProps)(UserProfileContainer));
+

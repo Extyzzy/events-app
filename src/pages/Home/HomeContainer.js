@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
 import Home from './Home';
 
 class HomeContainer extends Component {
   render() {
-    console.log('testing some stuff');
     return (
-      <Home 
-        isAuthenticated={this.props.isAuthenticated} 
-        test='1'
-      />
+      <Home/>
     );
   }
 }
-
 
 function mapStateToProps(store) {
   return {
@@ -24,3 +18,4 @@ function mapStateToProps(store) {
 }
 
 export default withRouter(connect(mapStateToProps)(HomeContainer));
+

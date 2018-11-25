@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import { withRouter } from 'react-router';
-
 import ConfirmAccount from './ConfirmAccount';
 import { fetchApiRequest } from '../../../fetch';
 import { SilencedError } from "../../../exceptions/errors";

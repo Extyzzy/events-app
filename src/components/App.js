@@ -14,12 +14,12 @@ import Loader from './Loader';
 /* eslint-disable */
 import PageNotFound from '../pages/_errors/PageNotFound';
 import Home from '../pages/Home';
-import SignIn from '../pages/SignIn';
 import Layout from '../components/_layout/Layout';
 /* eslint-enable */
 
 
 import EventsSwitch from '../pages/_events/Switch';
+import UserProfileSwitch from '../pages/_userProfile/Switch';
 import { AuthRoutes } from '../pages/_auth/Switch';
 
 
@@ -81,10 +81,12 @@ class App extends Component {
       <Layout>
         <Switch>
           <Route path="/" exact component={Home} />
-
           <Route path="/events" component={EventsSwitch} />
-          <Route path="/sign-in" component={SignIn} />
+          
+          <PrivateRoute isAuthenticated={isAuthenticated} path="/profile" component={UserProfileSwitch} />
+
           {AuthRoutes}
+
           <Route component={PageNotFound} />
         </Switch>
       </Layout>

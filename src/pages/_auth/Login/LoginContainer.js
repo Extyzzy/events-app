@@ -60,46 +60,6 @@ class LoginContainer extends Component {
     );
   }
 
-  doSocialLogin(data) {
-    const {
-      dispatch,
-      isFetching,
-      history,
-    } = this.props;
-
-    if (isFetching) {
-      return false;
-    }
-
-    const {
-      provider,
-      providerId,
-      token,
-    } = data;
-
-    dispatch(
-      loginUser(
-        appendToFormData(
-          new FormData(),
-          {
-            provider,
-            providerId,
-            token,
-          }
-        ),
-        () => {
-          history.push(
-            '/signup',
-            {
-              from: '/login',
-              data,
-            }
-          )
-        }
-      )
-    );
-  }
-
   render() {
     const {
       history,
@@ -116,7 +76,7 @@ class LoginContainer extends Component {
     // Can't access login page while logged in
     if (isAuthenticated) {
       return (
-        <Redirect to={'/profile/edit'} />
+        <Redirect to={'/profile'} />
       );
     }
 

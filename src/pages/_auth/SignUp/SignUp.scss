@@ -1,109 +1,136 @@
 @import '../../../styles/app';
 
-html {
-  font-size: 16px;
+button:active,
+button:focus {
+  outline: none;
 }
 
-.root {
-  padding-top: 40vh;
-  min-height: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-.grid {
-  padding-bottom: $content-padding-vertical + 20px;
-}
-
-.widget {
-  max-width: 360px;
-  margin: -135px auto;
-  padding: 30px 30px 60px !important;
-
-  :global .form-control {
-    font-size: 14px;
-  }
-}
-
-.submit {
-  margin-left: 10px !important;
-}
-
-.email {
-  margin-bottom: 5px;
-}
-
-.hobbiesLabel {
-  width: 100%;
-  margin-bottom: 15px;
-
-  & > p {
-    margin-bottom: 0;
-  }
-}
-
-.descriptionTextarea {
-  width: 100%;
-  min-height: 100px;
-  max-height: 300px;
-  resize: vertical;
-}
-
-.datePickerContainer {
-  & > div {
-    display: block;
-  }
-}
-
-.calendar {
-  display: table-cell;
-}
-
-.socialLoginBlock {
+.sign-up__container {
+  align-items: center;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin: 120px auto 0;
+  max-width: 1280px;
 }
 
-.signTypeInfo {
-  & div {
-    cursor: auto;
-
-    &:active {
-      box-shadow: none;
-    }
-  }
-
-  & p {
-    display: inline-block;
-    height: 30px;
-    line-height: 30px;
-    padding-left: 10px;
-  }
+.sign-up__image {
+  background-color: #707070; 
+  height: 615px;
+  width: 615px;
 }
 
-.buttons {
+.sign-up__text-section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 80px;
+}
+
+.sign-up__text-section--left {
+  align-items: flex-start;
+}
+
+.sign-up__header-text {
+  color: #707070;
+  font-family: Roboto;
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 0.045em;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.sign-up__description-text {
+  color: #707070;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 32px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.sign-up__header-text--left,
+.sign-up__description-text--left {
+  text-align: left;
+}
+
+.sign-up__email {
+  margin-bottom: 20px;
+  position: relative;
+  width: 435px;
+}
+
+.sign-up__input {
+  border: 1px solid #707070;
+  border-radius: 3px;
+  color: #707070;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 700;
+  height: 50px;
+  padding: 0 90px 0 20px;
+  width: 100%;
+}
+
+.sign-up__input {
+  outline: none;
+}
+
+.sign-up__input--second-form {
+  margin-bottom: 25px;
+}
+
+.sign-up__submit-email {
+  background-color: #707070;
+  border: none;
+  border-radius: 0 3px 3px 0; 
+  height: 50px;
   position: absolute;
-  right: 25px;
+  right: 0;
+  top: 0;
+  width: 75px;  
 }
 
-.btnToolbar {
-  button + button {
-    margin-left: 10px;
-  }
+.sign-up__submit-email:hover,
+.sign-up__submit-google:hover {
+  cursor: pointer;
+}
 
-  @media (min-width: 501px) {
-    float: right;
-  }
+.sign-up__submit-email--succes {
+  border-radius: 3px;
+  width: 100%;
+}
 
-  @media (max-width: 500px) {
-    button {
-      width: 100%;
-    }
+.sign-up__submit-google {
+  background-color: #707070;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  height: 50px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  width: 435px;
+}
 
-    button + button {
-      margin-top: 5px;
-      margin-left: 0;
-    }
-  }
+.sign-up__label {
+  color: #707070;
+  display: block;
+  font-family: Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.sign-up__label--green {
+  color: green;
+}
+
+.sign-up__label--red {
+  color: red;
 }

@@ -1,25 +1,10 @@
-import React, {Component}  from "react";
-import Layout from "../../components/_layout/Layout";
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-
-import Header from '../../components/_layout/Header/Header';
+import React , {Component} from "react";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-
-    console.log(this.props);
-  }
- 
-  render() {
-    const {
-      isAuthenticated,
-      test,
-      children
-    } = this.props;
-
-    console.log(isAuthenticated);
+    render() {
+        const {
+            hey
+        } = this.props;
     console.info(this.props.test);
     return (
       <>
@@ -30,4 +15,3 @@ class Home extends Component {
 }
 
 export default Home;
-
