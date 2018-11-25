@@ -33,14 +33,10 @@ class Header extends Component {
   }
 
   render() {
-
     const {
       isAuthenticated,
       history
     } = this.props;
-
-    console.log(history);
-    
 
     return (
       <nav className="nav">
@@ -49,26 +45,38 @@ class Header extends Component {
 
           <menu className="nav__menu">
             <li className="nav__menu-item">
-              <a onClick={() => history.push('/')} className="nav__menu-link">Home</a>
+              <span onClick={() => history.push('/')} className="nav__menu-link nav__menu-link--active">Home</span>
             </li>
             <li className="nav__menu-item">
-              <a onClick={() => history.push('/events')} className="nav__menu-link">Events</a>
+              <span onClick={() => history.push('/events')} className="nav__menu-link">Events</span>
             </li>
             <li className="nav__menu-item">
-              <a href="#" className="nav__menu-link">Why EventsBook</a>
+              <span  className="nav__menu-link">Why EventsBook</span>
             </li>
             <li className="nav__menu-item">
-              <a href="#" className="nav__menu-link">News</a>
+              <span  className="nav__menu-link">News</span>
             </li>
             <li className="nav__menu-item">
-              <a href="#" className="nav__menu-link">Blog</a>
+              <span className="nav__menu-link">Blog</span>
             </li>
           </menu>
-
-          <div className="nav__auth">
-            <a href="#" className="nav__button">Sign Up</a>
-            <a href="#" className="nav__link">Log In</a>
-          </div>
+          {
+            (
+              !isAuthenticated && (
+                <div className="nav__auth">
+                  <span onClick={() => history.push('/log-in')} className="nav__link nav__link--log-in">
+                    Log in
+                  </span>
+                  <span onClick={() => history.push('/sign-up')} className="nav__button">
+                    Sign Up
+                  </span>
+                </div>
+              )) || (
+                <div className="nav__auth">
+                  <span onClick={() => history.push('/log-out')} className="nav__link">Log Out</span>
+                </div>
+              )
+          }
         </div>
       </nav>
     );
@@ -78,6 +86,7 @@ class Header extends Component {
 function mapStateToProps(state) {
   return {
     accessToken: state.auth.accessToken,
+    isAuthenticated: state.auth.isAuthenticated,
     accessTokenExpiresOn: state.auth.accessTokenExpiresOn,
   };
 }

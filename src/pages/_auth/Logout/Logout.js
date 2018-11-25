@@ -9,15 +9,11 @@ class Logout extends Component {
     const {
       dispatch,
       accessToken,
-      accessTokenExpiresOn,
-      languagesList,
     } = this.props;
 
     dispatch(
       logoutUser(
-        accessToken,
-        accessTokenExpiresOn,
-        languagesList
+        accessToken
       )
     );
   }
@@ -33,7 +29,6 @@ function mapStateToProps(state) {
   return {
     accessToken: state.auth.accessToken,
     accessTokenExpiresOn: state.auth.accessTokenExpiresOn,
-    languagesList: state.languages.list,
   };
 }
 

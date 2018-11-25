@@ -19,6 +19,7 @@ import Layout from '../components/_layout/Layout';
 
 
 import EventsSwitch from '../pages/_events/Switch';
+import UserProfileSwitch from '../pages/_userProfile/Switch';
 import { AuthRoutes } from '../pages/_auth/Switch';
 
 
@@ -80,9 +81,12 @@ class App extends Component {
       <Layout>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/events" component={EventsSwitch} />
+          
+          <PrivateRoute isAuthenticated={isAuthenticated} path="/profile" component={UserProfileSwitch} />
 
-          <Route path="/events" component={EventsSwitch} />,
           {AuthRoutes}
+
           <Route component={PageNotFound} />
         </Switch>
       </Layout>

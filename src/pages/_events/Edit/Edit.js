@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import s from './Edit.scss';
 import Layout from '../../../components/_layout/Layout/Layout';
 import PageNotFound from '../../_errors/PageNotFound/PageNotFound';
 import Loader from '../../../components/Loader/Loader';
@@ -17,9 +16,6 @@ class Edit extends Component {
   }
 
   render() {
-    const {
-      permissions,
-    } = this.props;
 
     const {
       data,

@@ -5,7 +5,6 @@ import './Loader.scss';
 const Loader = ({className, sm, contrast}) => (
   <div
     className={classes('root', {
-      ['contrast']: contrast,
     }, className)}
   />
 );

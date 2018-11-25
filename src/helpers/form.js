@@ -1,5 +1,4 @@
 import { isEqual, isNil } from 'lodash';
-import {SilencedError} from "../exceptions/errors";
 
 /**
  * Append object values to provided FormData.

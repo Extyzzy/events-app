@@ -2,102 +2,74 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router';
 import { appendToFormData } from '../../../helpers/form';
+
 import {
-  signUpUser,
   loginUser,
   clearSignUpErrors,
 } from '../../../actions/user';
+
+import {
+  SilencedError
+} from "../../../exceptions/errors";
+
+import {
+  UnprocessableEntity
+} from '../../../exceptions/http';
+
+import { fetchApiRequest } from "../../../fetch";
+
 import SignUp from './SignUp';
 
 class SignUpContainer extends Component {
+
   constructor(props, context) {
     super(props, context);
 
-    const {location} = this.props;
-    const data = location.state ? location.state.data : null;
-
     this.state = {
-      ...(data ? {
-        __password: null,
-        __passwordConfirmation: null,
-        __firstName: data.firstName,
-        __lastName: data.lastName,
-        __email: data.email || null,
-        __provider: data.provider,
-        __providerId: data.providerId,
-        __token: data.token,
-        __profileLanguage: null,
-      } : {
         __email: '',
+        __emailSentSucces: false,
+        __key: null,
+        __secondForm: false,
+        __name: '',
         __password: '',
         __passwordConfirmation: '',
-        __firstName: null,
-        __lastName: null,
-        __provider: null,
-        __providerId: null,
-        __token: null,
-      }),
-    }
-
+        __passwordsMatch: false,
+     };
+  
     this.doSignUp = this.doSignUp.bind(this);
+    this.sendEmail = this.sendEmail.bind(this);
+    this.sendSignUpData = this.sendSignUpData.bind(this);
   }
 
-  // componentDidMount() {
-  //   const {
-  //     dispatch,
-  //     profileLanguagesList,
-  //   } = this.props;
-  //
-  //   const {
-  //     __profileLanguage,
-  //   } = this.state;
-  //
-  //   const browserLang = navigator.language.replace(/-|[A-Z]/g, '') || navigator.userLanguage;
-  //   const [defaultProfileLanguage] = profileLanguagesList;
-  //
-  //   if (!profileLanguagesList || !profileLanguagesList.length) {
-  //     dispatch(
-  //       fetchLanguages()
-  //     );
-  //   }
-  //
-  //   if (defaultProfileLanguage !== undefined && __profileLanguage === null) {
-  //     const userLanguage = profileLanguagesList.find(l => l.short === browserLang);
-  //
-  //     if(!!userLanguage){
-  //       this.setState({
-  //         __profileLanguage: {
-  //           value: defaultProfileLanguage.id,
-  //           label: defaultProfileLanguage.full,
-  //         },
-  //       })
-  //     } else {
-  //       this.setState({
-  //         __profileLanguage: {
-  //           value: userLanguage.id,
-  //           label: userLanguage.full,
-  //         },
-  //       })
-  //     }
-  //   }
-  // }
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   const {
-  //     profileLanguagesList,
-  //   } = nextProps;
-  //
-  //   const [defaultProfileLanguage] = profileLanguagesList;
-  //
-  //   if (defaultProfileLanguage !== undefined) {
-  //     this.setState({
-  //       __profileLanguage: {
-  //         value: defaultProfileLanguage.id,
-  //         label: defaultProfileLanguage.full,
-  //       },
-  //     })
-  //   }
-  // }
+  componentDidMount() {
+    if (window.location.href.indexOf('email') !== -1 && window.location.href.indexOf('key') !== -1) {
+      this.setState({
+        __secondForm: true,
+        __email: new URL(window.location.href).searchParams.get('email'),
+        __key: new URL(window.location.href).searchParams.get('key')
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {location: nextLocation} = nextProps;
+    const {location} = this.props;
+
+    if (location.search !== nextLocation.search) {
+      if (!(window.location.href.indexOf('email') !== -1 && window.location.href.indexOf('key') !== -1)) {
+        this.setState({
+          __secondForm: false,
+          __email: ''
+        });
+      } else {
+        this.setState({
+          __secondForm: true,
+          __email: new URL(window.location.href).searchParams.get('email'),
+          __key: new URL(window.location.href).searchParams.get('key')
+        });
+      }
+    }
+  }
 
   componentWillUnmount() {
     const { dispatch } = this.props;
@@ -106,107 +78,143 @@ class SignUpContainer extends Component {
       clearSignUpErrors()
     );
   }
+  
+  doSignUp(e) {
+    e.preventDefault();
 
-  getFormData() {
+  }
+
+  componentDidUpdate() {
     const {
-      __email: email,
-      __password: password,
-      __passwordConfirmation: password_confirmation,
-      __provider: provider,
-      __providerId: providerId,
-      __token: token,
+      __password,
+      __passwordConfirmation,
+      __passwordsMatch
+    } = this.state;
+
+    if (__password === __passwordConfirmation && __password !== '') {
+      if (!__passwordsMatch) {
+        this.setState({
+          __passwordsMatch: true
+        });
+      }
+    }
+    else {
+      if (__passwordsMatch) {
+        this.setState({
+          __passwordsMatch: false
+        });
+      }
+    }
+  }
+
+  createFormDataEmail() {
+    const {
+      __email,
     } = this.state;
 
     return appendToFormData(
       new FormData(),
       {
-        ...(provider ? {
-          provider,
-          providerId,
-          token,
-          email,
-          language: 'NKl6GYL2',
-        } : {
-          email,
-          password,
-          password_confirmation,
-          firstName: null,
-          lastName: null,
-          language: 'NKl6GYL2',
-        }),
+        email: __email,
       },
-      'user'
     );
   }
-
-  doSignUp(e) {
+  
+  sendEmail(e) {
     e.preventDefault();
 
+   fetchApiRequest('/send_email', {
+      method: 'POST',
+      body: this.createFormDataEmail(),
+    })
+    .then(response => {
+      switch(response.status) {
+        case 200:
+          console.log('succes');
+          return this.setState({
+            __emailSentSucces: true,
+          });
+
+        default:
+          return console.info(response);
+      }
+    })
+    .then(() => {
+      return;
+    })
+  }
+
+  createSignUpData() {
+    const {
+      __email,
+      __name,
+      __password,
+      __key,
+    } = this.state;
+
+    return appendToFormData(
+      new FormData(),
+      {
+        email: __email,
+        name: __name,
+        password: __password,
+        key: __key,
+      },
+    );
+  }
+
+  sendSignUpData(e) {
+    e.preventDefault();
+
+    if (!this.state.__passwordsMatch) {
+      alert(`Password doesn't match`)
+    }
+
     const {
       dispatch,
       isFetching,
+      history
     } = this.props;
 
     if (isFetching) {
       return false;
     }
 
-    dispatch(
-      signUpUser(
-        this.getFormData()
-      )
-    );
-  }
-
-  doSocialLogin(data) {
-    const {
-      dispatch,
-      isFetching,
-    } = this.props;
-
-    if (isFetching) {
-      return false;
-    }
-
-    const {
-      provider,
-      providerId,
-      token,
-    } = data;
-
-    dispatch(
-      loginUser(
-        appendToFormData(
-          new FormData(),
-          {
-            provider,
-            providerId,
-            token,
-          }
-        ), () => {
-          this.setState({
-            __password: null,
-            __passwordConfirmation: null,
-            __email: data.email || null,
-            __provider: data.provider,
-            __providerId: data.providerId,
-            __token: data.token,
-          })
-        }
-      )
-    );
-  }
+    fetchApiRequest('/register', {
+      method: 'POST',
+      body: this.createSignUpData(), 
+    })
+    .then(response => {
+      switch (response.status) {
+        case 201:
+          return;
+        case 406:
+          return response.json().then(() => {
+            return Promise.reject(
+              new UnprocessableEntity()
+            );
+          });
+        default:
+         
+          return Promise.reject(
+            new SilencedError('Sign up process failed.')
+          );
+      }
+    })
+    .then(() => dispatch(loginUser(this.createSignUpData())))
+    .then(() => history.push('/profile'))
+  } 
 
   render() {
     const {
       location,
-      isFetching,
       isAuthenticated,
       errors,
       history,
     } = this.props;
 
-    const { from } = location.state || { from: { pathname: '/login' } };
+    // Redirects user if he is logged
+    const { from } = location.state || { from: { pathname: '/log-in' } };
 
     if (isAuthenticated) {
       return (
@@ -221,69 +229,38 @@ class SignUpContainer extends Component {
       __password,
       __passwordConfirmation,
       __provider,
+      __emailSentSucces,
+      __key,
+      __secondForm,
+      __passwordsMatch,
     } = this.state;
 
+    
     return (
       <SignUp
-        requestLoginWithFacebook={({
-           email,
-           id: providerId,
-           accessToken: token,
-         }) => {
-          if (providerId) {
-            this.doSocialLogin({
-              email,
-              provider: 'facebook',
-              providerId,
-              token,
-            });
-          }
-        }}
-
-        requestLoginWithGoogle={({
-           El: providerId,
-           w3: {
-             U3: email,
-           },
-           Zi: {
-             access_token: token,
-           },
-         }) => {
-          if (providerId) {
-            this.doSocialLogin({
-              email,
-              provider: 'google',
-              providerId,
-              token,
-            });
-          }
-        }}
-
-        isFetching={isFetching}
-        logUsingSocial={!!__provider}
-
-        onSubmit={this.doSignUp}
+        sendEmail={this.sendEmail}
+        sendSignUpData={this.sendSignUpData}
         onCancelSignup={() => {
           history.push('/login', { from: '/signup' })
         }}
 
+        __secondForm={__secondForm}
+        __key={__key}
+        __emailSentSucces={__emailSentSucces}
         __provider={__provider}
         __email={__email}
         __firstName={__firstName}
         __lastName={__lastName}
         __password={__password}
         __passwordConfirmation={__passwordConfirmation}
-
-        onFirstNameChange={({target: {value: __firstName}}) => {
-          this.setState({__firstName});
-        }}
-
-        onLastNameChange={({target: {value: __lastName}}) => {
-          this.setState({__lastName});
-        }}
+        __passwordsMatch={__passwordsMatch}
 
         onEmailChange={({target: {value: __email}}) => {
           this.setState({__email});
+        }}
+
+        onNameChange={({target: {value: __name}}) => {
+          this.setState({__name});
         }}
 
         onPasswordChange={({target: {value: __password}}) => {
@@ -305,7 +282,6 @@ function mapStateToProps(state) {
     isFetching: state.auth.signUpIsFetching,
     isAuthenticated: state.auth.isAuthenticated,
     errors: state.auth.signUpErrors,
-    profileLanguagesList: state.languages.list,
   };
 }
 

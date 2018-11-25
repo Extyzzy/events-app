@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Home from './Home';
+import UserProfile from './UserProfile';
 
-class HomeContainer extends Component {
+class UserProfileContainer extends Component {
   render() {
     return (
-      <Home/>
+      <UserProfile/>
     );
   }
 }
@@ -17,5 +17,5 @@ function mapStateToProps(store) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(HomeContainer));
+export default withRouter(connect(mapStateToProps)(UserProfileContainer));
 

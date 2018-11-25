@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import s from './Layout.scss';
 import Header from '../Header';
-import Footer from '../Footer';
 import { connect } from 'react-redux';
-import classes from 'classnames';
 
 class Layout extends Component {
   static propTypes = {
@@ -22,20 +19,14 @@ class Layout extends Component {
     const {
       children,
       content,
-      contentHasBackground,
     } = this.props;
 
     return (
       <div className={'layout'}>
           <Header />
-            <main className={'container'}>
-                <div className={classes('content', {
-                    [s.contentBackground]: contentHasBackground,
-                })}>
-                    {children || content}
-                </div>
+            <main>
+              {children || content}
             </main>
-          <Footer />
       </div>
     );
   }

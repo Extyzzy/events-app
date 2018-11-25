@@ -1,18 +1,17 @@
-import { InvalidRefreshToken } from '../exceptions/auth';
-import { UnprocessableEntity } from '../exceptions/http';
-import { fetchApiRequest, fetchAuthorizedApiRequest } from "../fetch";
-import { SilencedError } from "../exceptions/errors";
+import {
+  InvalidRefreshToken
+} from '../exceptions/auth';
+import {
+  UnprocessableEntity
+} from '../exceptions/http';
+import {
+  fetchApiRequest,
+  fetchAuthorizedApiRequest
+} from "../fetch";
+import {
+  SilencedError
+} from "../exceptions/errors";
 
-/*---------------------- SWITCH USER AVATAR ---------------------*/
-
-export const SWITCH_USER_AVATAR = 'SWITCH_USER_AVATAR';
-
-export function switchUserAvatar(avatar) {
-  return {
-    type: SWITCH_USER_AVATAR,
-    avatar,
-  };
-}
 
 /*---------------------------- SIGN UP -----------------------------*/
 
@@ -20,30 +19,6 @@ export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const CLEAR_SIGNUP_ERRORS = 'CLEAR_SIGNUP_ERRORS';
-export const SET_INVITED_USERS_LIST = 'SET_INVITED_USERS_LIST';
-export const APPENT_USER_TO_INVITED_LIST = 'APPENT_USER_TO_INVITED_LIST';
-
-function requestSignUp() {
-  return {
-    type: SIGNUP_REQUEST,
-    isFetching: true,
-  };
-}
-
-function receiveSignUp(accessToken, accessTokenExpiresOn) {
-  return {
-    type: SIGNUP_SUCCESS,
-    accessToken,
-    accessTokenExpiresOn,
-  };
-}
-
-function signUpError(errors) {
-  return {
-    type: SIGNUP_FAILURE,
-    errors,
-  };
-}
 
 export function clearSignUpErrors() {
   return {
@@ -51,100 +26,6 @@ export function clearSignUpErrors() {
   };
 }
 
-export function setInvitedUsersList(invitedUsers) {
-  return {
-    type: SET_INVITED_USERS_LIST,
-    invitedUsers,
-  };
-}
-
-export function addNewUserToInvitedList(user) {
-  return {
-    type: APPENT_USER_TO_INVITED_LIST,
-    user,
-  }
-}
-
-/**
- * Sign up the user using provided information.
- * Automatically authenticate user after a
- * successful registration.
- *
- * Note! This method must be dispatched.
- *
- * @param {FormData} creds
- * @returns {function(*=)}
- */
-export function signUpUser(creds) {
-  return dispatch => {
-    dispatch(requestSignUp());
-
-    return fetchApiRequest('/v1/account/register', {
-      method: 'POST',
-      credentials: 'include',
-      body: creds,
-    })
-      .then(response => {
-        switch(response.status) {
-          case 201:
-
-            return response.json().then(({
-               access_token: accessToken,
-               expires_in: expiresIn
-             }) => {
-              let now = new Date();
-              let expiresOn = now.setSeconds(
-                now.getSeconds() + expiresIn
-              );
-
-              return {
-                accessToken,
-                expiresOn,
-              };
-            });
-
-          case 422:
-
-            return response.json().then(({errors}) => {
-              dispatch(signUpError(errors));
-
-              return Promise.reject(
-                new UnprocessableEntity()
-              );
-            });
-
-          default:
-
-            dispatch(signUpError(
-              ['Sign up process failed.']
-            ));
-
-            return Promise.reject(
-              new SilencedError('Sign up process failed.')
-            );
-
-        }
-      })
-      .then(auth => Promise.all([
-        auth,
-        dispatch(fetchPersonalData(auth.accessToken)),
-      ]))
-      .then(([auth, userData]) => {
-        localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
-        localStorage.setItem('ACCESS_TOKEN_EXPIRES_ON', auth.expiresOn);
-
-        // Set required data & dispatch the success action
-        dispatch(setUserData(userData));
-
-        dispatch(receiveSignUp(
-          auth.accessToken,
-          auth.expiresOn
-        ));
-
-        return Promise.resolve();
-      });
-  };
-}
 
 /*----------------------------- LOGIN ------------------------------*/
 
@@ -190,37 +71,36 @@ export function clearLoginErrors() {
  * @returns {function(*=)}
  */
 export function loginUser(creds, onAuthFail = null) {
+
+
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin());
 
-    return fetchApiRequest('/v1/login', {
-      method: 'POST',
-      credentials: 'include',
-      body: creds,
-    })
+    return fetchApiRequest('/login', {
+        method: 'POST',
+        body: creds,
+      })
       .then(response => {
-        switch(response.status) {
+        switch (response.status) {
           case 200:
 
             return response.json().then(({
-               access_token: accessToken,
-               expires_in: expiresIn
-             }) => {
-              let now = new Date();
-              let expiresOn = now.setSeconds(
-                now.getSeconds() + expiresIn
-              );
+              access_token: accessToken,
+              expires_in: expiresIn
+            }) => {
 
               return {
                 accessToken,
-                expiresOn,
+                expiresIn,
               };
             });
 
           case 422:
 
-            return response.json().then(({errors}) => {
+            return response.json().then(({
+              errors
+            }) => {
               dispatch(loginError(errors));
 
               return Promise.reject(
@@ -242,7 +122,7 @@ export function loginUser(creds, onAuthFail = null) {
       })
       .then(auth => Promise.all([
         auth,
-        dispatch(fetchPersonalData(auth.accessToken)),
+        // dispatch(fetchPersonalData(auth.accessToken)),
       ]), () => {
         if (onAuthFail instanceof Function) {
           onAuthFail();
@@ -252,17 +132,17 @@ export function loginUser(creds, onAuthFail = null) {
           new SilencedError('Authorization Failed.')
         );
       })
-      .then(([auth, userData]) => {
+      .then(([auth]) => {
         localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
-        localStorage.setItem('ACCESS_TOKEN_EXPIRES_ON', auth.expiresOn);
+        localStorage.setItem('ACCESS_TOKEN_EXPIRES_ON', auth.expiresIn);
 
         // Set required data & dispatch the success action
 
-        dispatch(setUserData(userData));
+        //dispatch(setUserData(userData));
 
         dispatch(receiveLogin(
           auth.accessToken,
-          auth.expiresOn
+          auth.expiresIn
         ));
 
         return Promise.resolve();
@@ -289,20 +169,15 @@ function logout() {
  * @param accessTokenExpiresOn
  * @returns {function(*)}
  */
-export function logoutUser(accessToken, accessTokenExpiresOn) {
+export function logoutUser(accessToken) {
   return dispatch => {
-    if (accessToken && accessTokenExpiresOn) {
-      if (parseInt(accessTokenExpiresOn, 10) > (new Date()).getTime()) {
-        fetchApiRequest('/v1/logout', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-          },
-        });
-      }
-    }
+      fetchApiRequest('/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
 
-    localStorage.removeItem('USER_LANGUAGE');
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ACCESS_TOKEN_EXPIRES_ON');
 
@@ -337,19 +212,19 @@ function receiveNewToken(accessToken, accessTokenExpiresOn) {
 export function refreshAccessToken() {
   return dispatch => {
     return fetchApiRequest('/v1/login/refresh', {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-    })
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+      })
       .then(response => {
-        switch(response.status) {
+        switch (response.status) {
           case 200:
 
             return response.json()
               .then(({
-                       access_token: accessToken,
-                       expires_in: expiresIn
-                     }) => {
+                access_token: accessToken,
+                expires_in: expiresIn
+              }) => {
                 let now = new Date();
                 let expiresOn = now.setSeconds(
                   now.getSeconds() + expiresIn
@@ -369,7 +244,10 @@ export function refreshAccessToken() {
 
         }
       })
-      .then(({accessToken, expiresOn}) => {
+      .then(({
+        accessToken,
+        expiresOn
+      }) => {
         localStorage.setItem('ACCESS_TOKEN', accessToken);
         localStorage.setItem('ACCESS_TOKEN_EXPIRES_ON', expiresOn);
 
@@ -403,14 +281,14 @@ export function setUserData(data) {
 export function fetchPersonalData(accessToken) {
   return dispatch => {
     return dispatch(
-      fetchAuthorizedApiRequest('/v1/account/details', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      })
-    )
+        fetchAuthorizedApiRequest('/v1/account/details', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        })
+      )
       .then(response => {
-        switch(response.status) {
+        switch (response.status) {
           case 200:
             return response.json();
           default:
@@ -430,16 +308,5 @@ export function receiveEditUser(user) {
   return {
     type: EDIT_USER_SUCCESS,
     user,
-  };
-}
-
-/*---------------------------- UPDATE PENDING ---------------------------*/
-
-export const UPDATE_PENDING_STATUS = 'UPDATE_PENDING_STATUS';
-
-export function updatePendingStatus(status) {
-  return {
-    type: UPDATE_PENDING_STATUS,
-    status,
   };
 }

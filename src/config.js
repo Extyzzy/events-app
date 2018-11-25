@@ -1,7 +1,7 @@
 
 export default {
 
-  apiUrl: process.env.API_URL || '',
+  apiUrl: 'http://localhost:8080' || process.env.API_URL || '',
   uiUrl: process.env.UI_URL || '',
 
   defaultMeta: {},
