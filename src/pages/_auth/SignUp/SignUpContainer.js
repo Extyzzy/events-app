@@ -123,11 +123,12 @@ class SignUpContainer extends Component {
   sendEmail(e) {
     e.preventDefault();
 
-   fetchApiRequest('/send_email', {
+   fetchApiRequest('/email_validation', {
       method: 'POST',
       body: this.createFormDataEmail(),
     })
     .then(response => {
+      console.log(this.state.__email);
       switch(response.status) {
         case 200:
           console.log('succes');
