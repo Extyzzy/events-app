@@ -82,14 +82,14 @@ export function loginUser(creds, onAuthFail = null) {
         body: creds,
       })
       .then(response => {
+        console.log(`Response ${response}`);
+        console.log(`Status ${response.status}`);
         switch (response.status) {
           case 200:
-
             return response.json().then(({
               access_token: accessToken,
               expires_in: expiresIn
             }) => {
-
               return {
                 accessToken,
                 expiresIn,
@@ -97,7 +97,6 @@ export function loginUser(creds, onAuthFail = null) {
             });
 
           case 422:
-
             return response.json().then(({
               errors
             }) => {
@@ -109,7 +108,6 @@ export function loginUser(creds, onAuthFail = null) {
             });
 
           default:
-
             dispatch(loginError(
               ['Invalid Credentials.']
             ));
@@ -117,7 +115,6 @@ export function loginUser(creds, onAuthFail = null) {
             return Promise.reject(
               new SilencedError('Invalid Credentials.')
             );
-
         }
       })
       .then(auth => Promise.all([
@@ -171,12 +168,12 @@ function logout() {
  */
 export function logoutUser(accessToken) {
   return dispatch => {
-      fetchApiRequest('/logout', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      });
+    fetchApiRequest('/logout', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    });
 
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ACCESS_TOKEN_EXPIRES_ON');
