@@ -137,7 +137,7 @@ class SignUpContainer extends Component {
           });
 
         default:
-          return console.info(response);
+          return
       }
     })
     .then(() => {
