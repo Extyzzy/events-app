@@ -13,17 +13,11 @@ class Create extends Component {
 
   render() {
     return (
-      <Layout
-        hasSidebar
-        whichSidebar='My Profile'
-        contentHasBackground
-      >
         <div className='root'>
           <div className='title'>
             <h4>Bla</h4>
           </div>
         </div>
-      </Layout>
     );
   }
 }

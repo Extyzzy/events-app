@@ -1,0 +1,28 @@
+@import '../../../styles/app';
+
+.input {
+  border: 1px solid #707070;
+  border-radius: 3px;
+  color: #707070;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 700;
+  height: 50px;
+  padding: 0 90px 0 20px;
+  width: 100%;
+}
+
+.input {
+  outline: none;
+}
+
+.label {
+  color: #707070;
+  display: block;
+  font-family: Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}

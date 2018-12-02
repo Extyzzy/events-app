@@ -4,6 +4,7 @@ import { CreateEventRoute } from "../../core/Router";
 import { connect } from 'react-redux';
 /* eslint-disable */
 import EventsBundle from './Events';
+import EventIdBundle from './EventId';
 import EventCreateBundle from './Create/CreateEvent';
 import EventEditBundle from './Edit';
 import PageNotFoundBundle from '../../pages/_errors/PageNotFound';
@@ -16,6 +17,8 @@ class EventsSwitch extends React.PureComponent {
     return (
       <Switch>
         <Route key='events' path="/events" exact component={EventsBundle} />
+        <Route path="/events/:id" component={EventIdBundle} />
+
         <CreateEventRoute
           isAuthenticated={isAuthenticated}
           path="/events/create"

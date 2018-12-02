@@ -35,7 +35,7 @@ class SignUpContainer extends Component {
         __passwordConfirmation: '',
         __passwordsMatch: false,
      };
-  
+
     this.doSignUp = this.doSignUp.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
     this.sendSignUpData = this.sendSignUpData.bind(this);
@@ -242,7 +242,7 @@ class SignUpContainer extends Component {
         sendEmail={this.sendEmail}
         sendSignUpData={this.sendSignUpData}
         onCancelSignup={() => {
-          history.push('/login', { from: '/signup' })
+          history.push('/log-in', { from: '/signup' })
         }}
 
         __secondForm={__secondForm}

@@ -9,13 +9,15 @@ class Events extends Component {
       title,
       description,
       tags,
-      img
+      img,
+      clickHandler
     } = this.props;
 
     return (
             <div 
               className="event" 
               id={ id }
+              onClick={() => clickHandler()}
             >
               <img 
                 className="event__image" 

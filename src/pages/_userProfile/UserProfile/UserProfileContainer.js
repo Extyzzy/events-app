@@ -4,9 +4,11 @@ import { withRouter } from 'react-router';
 import UserProfile from './UserProfile';
 
 class UserProfileContainer extends Component {
+  createEvent = () => this.props.history.push(`/profile/event/create`);
+
   render() {
     return (
-      <UserProfile/>
+      <UserProfile createEvent={() => this.createEvent()}/>
     );
   }
 }

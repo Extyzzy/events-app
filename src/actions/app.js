@@ -59,6 +59,9 @@ function fetchAuthState(resolve, reject) {
         resolve();
       }
       else {
+        // Blocking the call to refresh token
+
+        /*
         return dispatch(refreshAccessToken())
           .then(() => resolve())
           .catch(e => {
@@ -67,6 +70,7 @@ function fetchAuthState(resolve, reject) {
 
             reject(new InvalidRefreshToken());
           });
+          */
       }
     }
 
