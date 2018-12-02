@@ -1,8 +1,9 @@
 
+
 export default {
 
-  apiUrl: 'http://localhost:8080' || process.env.API_URL || '',
-  uiUrl: process.env.UI_URL || '',
+  apiUrl: process.env.REACT_APP_API_URL || '',
+  uiUrl: process.env.REACT_APP_UI_URL || '',
 
   defaultMeta: {},
 

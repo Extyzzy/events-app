@@ -1,6 +1,7 @@
 import React from 'react';
 import './SignUp.scss';
 import classes from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const SignUp = ({
   sendEmail,
@@ -99,7 +100,12 @@ const SignUp = ({
                     "sign-up__submit-email--succes": __emailSentSucces,
                   })}
                 >
-                  ✈️
+                  <FontAwesomeIcon
+                      inverse transform="shrink-6"
+                      size='2x'
+                      color='white'
+                      icon={['fab', 'telegram-plane']}
+                  />
                 </button>
 
               </form>
