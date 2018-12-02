@@ -79,6 +79,7 @@ export function loginUser(creds, onAuthFail = null) {
 
     return fetchApiRequest('/login', {
         method: 'POST',
+        // credentials: 'include',
         body: creds,
       })
       .then(response => {
