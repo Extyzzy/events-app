@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router';
 import { connect, Provider as ReduxProvider } from 'react-redux';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
 import {
   fetchInitialState,
@@ -29,6 +32,8 @@ const ContextType = {
   // http://redux.js.org/docs/basics/UsageWithReact.html
   ...ReduxProvider.childContextTypes,
 };
+
+library.add(fab, fas);
 
 class App extends Component {
   static propTypes = {
