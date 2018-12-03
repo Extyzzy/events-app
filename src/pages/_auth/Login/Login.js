@@ -42,7 +42,7 @@ const Login = ({
               onChange={onPasswordChange}
               value={__password}
             />
-            <button className="sign-up__submit-google">
+            <button className="sign-up__submit">
               Log In
             </button>
           </form>

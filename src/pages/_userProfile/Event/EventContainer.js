@@ -32,6 +32,7 @@ class EventContainer extends Component {
     return appendToFormData(
       new FormData(),
       {
+        id: 1,
         title: __title,
         description: __description,
         tags: __tags,

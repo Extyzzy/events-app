@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import './Header.scss';
 
@@ -64,16 +65,36 @@ class Header extends Component {
             (
               !isAuthenticated && (
                 <div className="nav__auth">
-                  <span onClick={() => history.push('/log-in')} className="nav__link nav__link--log-in">
+                  <span
+                    className="nav__link nav__link--log-in"
+                    onClick={() => history.push('/log-in')}
+                  >
                     Log in
                   </span>
-                  <span onClick={() => history.push('/sign-up')} className="nav__button">
+                  <span
+                    className="nav__button"
+                    onClick={() => history.push('/sign-up')}
+                  >
                     Sign Up
                   </span>
                 </div>
               )) || (
                 <div className="nav__auth">
-                  <span onClick={() => history.push('/log-out')} className="nav__link">Log Out</span>
+                  <span
+                    className="nav__profile"
+                    onClick={() => history.push('/profile')}
+                  >
+                  <FontAwesomeIcon
+                    size="1x"
+                    color="white"
+                    icon={["fas", "user"]}
+                  />
+                  </span>
+                  <span
+                    onClick={() => history.push('/log-out')} className="nav__link"
+                  >
+                    Log Out
+                  </span>
                 </div>
               )
           }

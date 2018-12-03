@@ -1,4 +1,5 @@
 @import '../../../styles/app';
+@import '../../../styles/new/_variables';
 
 button:active,
 button:focus {
@@ -7,23 +8,25 @@ button:focus {
 
 .sign-up__container {
   align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin: 120px auto 0;
-  max-width: 1280px;
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 0.3fr;
+  height: calc(100vh - 60px);
+}
+
+.sign-up__image-section {
+  height: 100%;
+  width: 100%;
 }
 
 .sign-up__image {
   background-color: #707070; 
-  height: 615px;
-  width: 615px;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 .sign-up__text-section {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  padding: 80px;
+  padding: 0 80px 0 100px;
 }
 
 .sign-up__text-section--left {
@@ -31,23 +34,21 @@ button:focus {
 }
 
 .sign-up__header-text {
-  color: #707070;
+  color: $color-blue-medium;
   font-family: Roboto;
-  font-size: 42px;
+  font-size: 48px;
   font-weight: 900;
-  letter-spacing: 0.045em;
-  margin-bottom: 40px;
-  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-bottom: 30px;
 }
 
 .sign-up__description-text {
-  color: #707070;
+  color: #b0b6bd;
   font-family: Roboto;
   font-size: 16px;
   font-weight: 400;
-  line-height: 32px;
-  margin-bottom: 60px;
-  text-align: center;
+  line-height: 28px;
+  margin-bottom: 70px;
 }
 
 .sign-up__header-text--left,
@@ -62,13 +63,14 @@ button:focus {
 }
 
 .sign-up__input {
-  border: 1px solid #707070;
+  border: 1px solid $color-magento;
   border-radius: 3px;
-  color: #707070;
+  color: $color-magento;
   font-family: Roboto;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   height: 50px;
+  letter-spacing: 0.025em;
   padding: 0 90px 0 20px;
   width: 100%;
 }
@@ -77,12 +79,17 @@ button:focus {
   outline: none;
 }
 
+.sign-up__input::placeholder {
+  color:#b0b6bd;
+  opacity: 0.75;
+}
+
 .sign-up__input--second-form {
   margin-bottom: 25px;
 }
 
 .sign-up__submit-email {
-  background-color: #707070;
+  background-color: $color-magento;
   border: none;
   border-radius: 0 3px 3px 0; 
   height: 50px;
@@ -92,8 +99,8 @@ button:focus {
   width: 75px;  
 }
 
-.sign-up__submit-email:hover,
-.sign-up__submit-google:hover {
+.sign-up__submit-email:active,
+.sign-up__submit-email:hover {
   cursor: pointer;
 }
 
@@ -102,8 +109,8 @@ button:focus {
   width: 100%;
 }
 
-.sign-up__submit-google {
-  background-color: #707070;
+.sign-up__submit {
+  background-color: $color-magento;
   border: none;
   border-radius: 3px;
   color: #ffffff;
@@ -114,6 +121,20 @@ button:focus {
   letter-spacing: 0.035em;
   text-transform: uppercase;
   width: 435px;
+}
+
+.sign-up__submit:active,
+.sign-up__submit:hover {
+  cursor: pointer;
+}
+
+.sign-up__submit--google {
+  opacity: 0.5;
+}
+
+.sign-up__submit--google:active,
+.sign-up__submit--google:hover {
+  cursor: not-allowed;
 }
 
 .sign-up__label {

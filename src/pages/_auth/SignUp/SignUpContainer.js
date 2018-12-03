@@ -1,7 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router';
-import { appendToFormData } from '../../../helpers/form';
+import React, {
+  Component
+} from 'react';
+import {
+  connect
+} from 'react-redux';
+import {
+  withRouter,
+  Redirect
+} from 'react-router';
+import {
+  appendToFormData
+} from '../../../helpers/form';
 
 import {
   loginUser,
@@ -16,7 +25,9 @@ import {
   UnprocessableEntity
 } from '../../../exceptions/http';
 
-import { fetchApiRequest } from "../../../fetch";
+import {
+  fetchApiRequest
+} from "../../../fetch";
 
 import SignUp from './SignUp';
 
@@ -26,15 +37,15 @@ class SignUpContainer extends Component {
     super(props, context);
 
     this.state = {
-        __email: '',
-        __emailSentSucces: false,
-        __key: null,
-        __secondForm: false,
-        __name: '',
-        __password: '',
-        __passwordConfirmation: '',
-        __passwordsMatch: false,
-     };
+      __email: '',
+      __emailSentSucces: false,
+      __key: null,
+      __secondForm: false,
+      __name: '',
+      __password: '',
+      __passwordConfirmation: '',
+      __passwordsMatch: false,
+    };
 
     this.doSignUp = this.doSignUp.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
@@ -52,8 +63,12 @@ class SignUpContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {location: nextLocation} = nextProps;
-    const {location} = this.props;
+    const {
+      location: nextLocation
+    } = nextProps;
+    const {
+      location
+    } = this.props;
 
     if (location.search !== nextLocation.search) {
       if (!(window.location.href.indexOf('email') !== -1 && window.location.href.indexOf('key') !== -1)) {
@@ -72,13 +87,15 @@ class SignUpContainer extends Component {
   }
 
   componentWillUnmount() {
-    const { dispatch } = this.props;
+    const {
+      dispatch
+    } = this.props;
 
     dispatch(
       clearSignUpErrors()
     );
   }
-  
+
   doSignUp(e) {
     e.preventDefault();
 
@@ -97,8 +114,7 @@ class SignUpContainer extends Component {
           __passwordsMatch: true
         });
       }
-    }
-    else {
+    } else {
       if (__passwordsMatch) {
         this.setState({
           __passwordsMatch: false
@@ -113,36 +129,40 @@ class SignUpContainer extends Component {
     } = this.state;
 
     return appendToFormData(
-      new FormData(),
-      {
+      new FormData(), {
         email: __email,
       },
     );
   }
-  
+
   sendEmail(e) {
+    const {
+      __emailSentSucces
+    } = this.state;
+
     e.preventDefault();
 
-   fetchApiRequest('/email_validation', {
-      method: 'POST',
-      body: this.createFormDataEmail(),
-    })
-    .then(response => {
-      console.log(this.state.__email);
-      switch(response.status) {
-        case 200:
-          console.log('succes');
-          return this.setState({
-            __emailSentSucces: true,
-          });
+    if (!__emailSentSucces) {
+      fetchApiRequest('/email_validation', {
+        method: 'POST',
+        body: this.createFormDataEmail(),
+      })
+      .then(response => {
+        switch (response.status) {
+          case 200:
+            console.log('succes');
+            return this.setState({
+              __emailSentSucces: true,
+            });
 
-        default:
-          return
-      }
-    })
-    .then(() => {
-      return;
-    })
+          default:
+            return
+        }
+      })
+      .then(() => {
+        return;
+      });
+    }
   }
 
   createSignUpData() {
@@ -154,8 +174,7 @@ class SignUpContainer extends Component {
     } = this.state;
 
     return appendToFormData(
-      new FormData(),
-      {
+      new FormData(), {
         email: __email,
         name: __name,
         password: __password,
@@ -182,29 +201,29 @@ class SignUpContainer extends Component {
     }
 
     fetchApiRequest('/register', {
-      method: 'POST',
-      body: this.createSignUpData(), 
-    })
-    .then(response => {
-      switch (response.status) {
-        case 201:
-          return;
-        case 406:
-          return response.json().then(() => {
+        method: 'POST',
+        body: this.createSignUpData(),
+      })
+      .then(response => {
+        switch (response.status) {
+          case 201:
+            return;
+          case 406:
+            return response.json().then(() => {
+              return Promise.reject(
+                new UnprocessableEntity()
+              );
+            });
+          default:
+
             return Promise.reject(
-              new UnprocessableEntity()
+              new SilencedError('Sign up process failed.')
             );
-          });
-        default:
-         
-          return Promise.reject(
-            new SilencedError('Sign up process failed.')
-          );
-      }
-    })
-    .then(() => dispatch(loginUser(this.createSignUpData())))
-    .then(() => history.push('/profile'))
-  } 
+        }
+      })
+      .then(() => dispatch(loginUser(this.createSignUpData())))
+      .then(() => history.push('/profile'))
+  }
 
   render() {
     const {
@@ -215,11 +234,20 @@ class SignUpContainer extends Component {
     } = this.props;
 
     // Redirects user if he is logged
-    const { from } = location.state || { from: { pathname: '/log-in' } };
+    const {
+      from
+    } = location.state || {
+      from: {
+        pathname: '/log-in'
+      }
+    };
 
     if (isAuthenticated) {
-      return (
-        <Redirect to={from}/>
+      return ( <
+        Redirect to = {
+          from
+        }
+        />
       );
     }
 
@@ -236,43 +264,104 @@ class SignUpContainer extends Component {
       __passwordsMatch,
     } = this.state;
 
-    
-    return (
-      <SignUp
-        sendEmail={this.sendEmail}
-        sendSignUpData={this.sendSignUpData}
-        onCancelSignup={() => {
-          history.push('/log-in', { from: '/signup' })
-        }}
 
-        __secondForm={__secondForm}
-        __key={__key}
-        __emailSentSucces={__emailSentSucces}
-        __provider={__provider}
-        __email={__email}
-        __firstName={__firstName}
-        __lastName={__lastName}
-        __password={__password}
-        __passwordConfirmation={__passwordConfirmation}
-        __passwordsMatch={__passwordsMatch}
+    return ( <
+      SignUp sendEmail = {
+        this.sendEmail
+      }
+      sendSignUpData = {
+        this.sendSignUpData
+      }
+      onCancelSignup = {
+        () => {
+          history.push('/log-in', {
+            from: '/signup'
+          })
+        }
+      }
 
-        onEmailChange={({target: {value: __email}}) => {
-          this.setState({__email});
-        }}
+      __secondForm = {
+        __secondForm
+      }
+      __key = {
+        __key
+      }
+      __emailSentSucces = {
+        __emailSentSucces
+      }
+      __provider = {
+        __provider
+      }
+      __email = {
+        __email
+      }
+      __firstName = {
+        __firstName
+      }
+      __lastName = {
+        __lastName
+      }
+      __password = {
+        __password
+      }
+      __passwordConfirmation = {
+        __passwordConfirmation
+      }
+      __passwordsMatch = {
+        __passwordsMatch
+      }
 
-        onNameChange={({target: {value: __name}}) => {
-          this.setState({__name});
-        }}
+      onEmailChange = {
+        ({
+          target: {
+            value: __email
+          }
+        }) => {
+          this.setState({
+            __email
+          });
+        }
+      }
 
-        onPasswordChange={({target: {value: __password}}) => {
-          this.setState({__password});
-        }}
+      onNameChange = {
+        ({
+          target: {
+            value: __name
+          }
+        }) => {
+          this.setState({
+            __name
+          });
+        }
+      }
 
-        onPasswordConfirmationChange={({target: {value: __passwordConfirmation}}) => {
-          this.setState({__passwordConfirmation});
-        }}
+      onPasswordChange = {
+        ({
+          target: {
+            value: __password
+          }
+        }) => {
+          this.setState({
+            __password
+          });
+        }
+      }
 
-        errors={errors}
+      onPasswordConfirmationChange = {
+        ({
+          target: {
+            value: __passwordConfirmation
+          }
+        }) => {
+          this.setState({
+            __passwordConfirmation
+          });
+        }
+      }
+
+      errors = {
+        errors
+      }
       />
     );
   }
