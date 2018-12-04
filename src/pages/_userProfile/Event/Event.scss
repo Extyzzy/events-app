@@ -1,28 +1,69 @@
 @import '../../../styles/app';
+@import '../../../styles/new/_variables';
 
-.input {
-  border: 1px solid #707070;
+
+.event-creation {
+  margin: 50px auto 0;
+  width: 1200px;
+}
+
+.event-creation__header {
+  margin-bottom: 35px;
+}
+
+.event-creation__form {
+  width: 400px;
+}
+
+.event-creation__input {
+  border: 1px solid $color-magento;
   border-radius: 3px;
-  color: #707070;
+  color: $color-magento;
   font-family: Roboto;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   height: 50px;
+  letter-spacing: 0.025em;
   padding: 0 90px 0 20px;
   width: 100%;
 }
 
-.input {
+.event-creation__input {
   outline: none;
 }
 
-.label {
+.event-creation__input::placeholder {
+  color:#b0b6bd;
+  opacity: 0.75;
+}
+
+.event-creation__label {
   color: #707070;
   display: block;
   font-family: Roboto, sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  margin: 0 0 10px;
+  margin: 20px 0 10px;
   text-transform: uppercase;
+}
+
+.event-creation__submit {
+  background-color: $color-magento;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  height: 40px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.035em;
+  margin-top: 25px;
+  padding: 0 25px;
+  text-transform: uppercase;
+}
+
+.event-creation__submit:active,
+.event-creation__submit:hover {
+  cursor: pointer;
 }

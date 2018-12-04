@@ -16,38 +16,41 @@ class Event extends Component {
     } = this.props;
 
     return (
-      <div>
-        <h1>UserProfile - Create Event</h1>
-        <form onSubmit={createEvent}>
-          <label className="label">Event title:</label>
+      <div className="event-creation">
+        <h1 className="event-creation__header">Create an event</h1>
+        <form 
+          onSubmit={createEvent}
+          className="event-creation__form"
+        >
+          <label className="event-creation__label">Event title:</label>
           <input 
-            className="input"
+            className="event-creation__input"
             type="text"
             onChange={onTitleChange}
             value={__title}
           />
-          <label className="label">Event description:</label>
+          <label className="event-creation__label">Event description:</label>
           <input 
             type="text"
-            className="input"
+            className="event-creation__input"
             onChange={onDescriptionChange}
             value={__description}
           />
-          <label className="label">Tags:</label>
+          <label className="event-creation__label">Tags:</label>
           <input 
-            className="input"
+            className="event-creation__input"
             type="text"
             onChange={onTagsChange}
             value={__tags}
           />
-          <label className="label">Image:</label>
+          <label className="event-creation__label">Image:</label>
           <input 
-            className="input"
+            className="event-creation__input"
             type="file"
             onChange={onImgChange}
             value={__imgs}
           />
-          <button>Send data</button>
+          <button className="event-creation__submit">Send data</button>
         </form>
       </div>
     );

@@ -13,7 +13,7 @@ class EventsContainer extends Component {
       events: [
         {
           _id: '1',
-          title: 'SOME EXTRA ULTRA OMEGA FANCY EVENIMENT',
+          title: 'Some extra ultra omega fancy eveniment',
           description: 'Some kind of random text inserted here just for sake of being, i am not even trying, lol... . This stuff starts to be boring i should begin to do something useful instead of doing some bullshit. And some other kind of text should be in here',
           tags: [
             'music',
@@ -23,7 +23,7 @@ class EventsContainer extends Component {
         },
         {
           _id: '2',
-          title: 'SOME EXTRA ULTRA OMEGA FANCY EVENIMENT',
+          title: 'Some extra ultra omega fancy eveniment',
           description: 'Some kind of random text inserted here just for sake of being, i am not even trying, lol... . This stuff starts to be boring i should begin to do something useful instead of doing some bullshit. And some other kind of text should be in here',
           tags: [
             'trap',
@@ -46,7 +46,7 @@ class EventsContainer extends Component {
       <div className="events">
       <div className="events__container">
         <div className="events__header">
-          <h2 className="events__headline">Evenimente</h2>
+          <h2 className="events__headline">Events</h2>
           <div className="events__month-switcher">
             <p className="events__month-name">November</p>
             <div className="events__month-buttons">

@@ -101,11 +101,11 @@ class LoginContainer extends Component {
         }}
 
         onCreateAccountClick={() => {
-          history.push('/signup', { from: '/login' })
+          history.push('/signup', { from: '/log-in' })
         }}
 
         resetPassword={() => {
-          history.push('/resetPassword', { from: '/login' })
+          history.push('/resetPassword', { from: '/log-in' })
         }}
 
         requestLoginWithFacebook={({

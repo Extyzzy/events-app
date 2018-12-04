@@ -1,3 +1,5 @@
+@import '../../../styles/new/_variables';
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,12 +27,11 @@ img {
 }
 
 .events__headline {
-  color: #707070;
+  color: $color-blue-medium;
   font-family: Roboto;
   font-size: 36px;
   font-weight: 900;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
 }
 
 .events__month-switcher {
@@ -70,8 +71,21 @@ img {
   width: 300px;
 }
 
+.event:active,
+.event:hover {
+  cursor: pointer;
+}
+
+.event:active .event__image,
+.event:hover .event__image, {
+  box-shadow: 0px 15px 25px 5px rgba(230,230,230,1);
+}
+
 .event__image {
-  height: 170px;
+  border-radius: 10px;
+  height: 350px;
+  object-fit: cover;
+  transition: box-shadow ease 500ms;
   width: 100%;
 }
 
@@ -94,18 +108,17 @@ img {
 }
 
 .event__title {
-  color: #707070;
+  color: $color-blue-medium;
   font-family: Roboto;
   font-size: 20px;
   font-weight: 900;
   letter-spacing: 0.025em;
   line-height: 24px;
   margin-bottom: 15px;
-  text-transform: uppercase;
 }
 
 .event__description {
-  color: #707070;
+  color: #b0b6bd;
   font-family: Roboto;
   font-size: 14px;
   font-weight: 400;
