@@ -38,7 +38,7 @@ class EventContainer extends Component {
     return appendToFormData(
       new FormData(),
       {
-        userId: 1,
+        userId: this.props.userId,
         type: __type,
         title: __title,
         description: __description,
@@ -109,6 +109,7 @@ class EventContainer extends Component {
 function mapStateToProps(store) {
   return {
     isAuthenticated: store.auth.isAuthenticated,
+    userId: store.auth.id,
   };
 }
 

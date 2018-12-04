@@ -4,7 +4,8 @@ import './UserProfile.scss';
 
 const UserProfile = (props) => {
   const {
-    createEvent
+    createEvent,
+    userName
   } = props;
 
   return (
@@ -19,7 +20,7 @@ const UserProfile = (props) => {
             />
           </span>
           <div className="user-profile__user-information">
-            <p className="user-profile__name">Eugeniu Racila</p>
+            <p className="user-profile__name">{userName}</p>
             <p className="user-profile__role">User / Organizer</p>
           </div>
         </div>

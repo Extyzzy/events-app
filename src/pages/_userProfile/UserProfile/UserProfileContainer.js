@@ -7,8 +7,15 @@ class UserProfileContainer extends Component {
   createEvent = () => this.props.history.push(`/profile/event/create`);
 
   render() {
+    const {
+      name
+    } = this.props;
+    
     return (
-      <UserProfile createEvent={() => this.createEvent()}/>
+      <UserProfile 
+        createEvent={() => this.createEvent()}
+        userName={name}
+      />
     );
   }
 }
@@ -16,6 +23,7 @@ class UserProfileContainer extends Component {
 function mapStateToProps(store) {
   return {
     isAuthenticated: store.auth.isAuthenticated,
+    name: store.auth.name
   };
 }
 

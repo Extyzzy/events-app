@@ -40,11 +40,13 @@ function requestLogin() {
   };
 }
 
-export function receiveLogin(accessToken, accessTokenExpiresOn) {
+export function receiveLogin(accessToken, accessTokenExpiresOn, id, name) {
   return {
     type: LOGIN_SUCCESS,
     accessToken,
     accessTokenExpiresOn,
+    id,
+    name
   };
 }
 
@@ -89,11 +91,15 @@ export function loginUser(creds, onAuthFail = null) {
           case 200:
             return response.json().then(({
               access_token: accessToken,
-              expires_in: expiresIn
+              expires_in: expiresIn,
+              id,
+              name
             }) => {
               return {
                 accessToken,
                 expiresIn,
+                id,
+                name
               };
             });
 
@@ -140,7 +146,9 @@ export function loginUser(creds, onAuthFail = null) {
 
         dispatch(receiveLogin(
           auth.accessToken,
-          auth.expiresIn
+          auth.expiresIn,
+          auth.id,
+          auth.name
         ));
 
         return Promise.resolve();
