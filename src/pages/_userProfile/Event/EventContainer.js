@@ -14,41 +14,50 @@ class EventContainer extends Component {
     this.state = {
       __title: '',
       __description: '',
-      __tags: '',
-      __imgs: ''
+      __type: '',
+      __imgs: '',
+      __amount: 0
     };
-
-    this.createFormData = this.createFormData.bind(this);
   }
 
-  createFormData() {
+  fileOnChange = (e) => (
+    this.setState({
+      __imgs: e.target.files[0]
+    })
+  )
+
+  createFormData = () => {
     const {
       __title,
       __description,
-      __tags,
+      __type,
       __imgs,
+      __amount,
     } = this.state;
 
     return appendToFormData(
       new FormData(),
       {
-        id: 1,
+        userId: 1,
+        type: __type,
         title: __title,
         description: __description,
-        tags: __tags,
-        imgs: __imgs,
+        amount: __amount,
+        images: __imgs,
       },
     );
   }
 
-  createEvent(e) {
+  createEvent = (e) => {
+    alert('here');
     e.preventDefault();
-
+    alert('here2');
     fetchApiRequest('/event', {
       method: 'POST',
       body: this.createFormData(), 
     })
     .then(response => {
+      alert('here3');
       switch (response.status) {
         case 201:
           return console.log('Event created successfully');
@@ -64,18 +73,20 @@ class EventContainer extends Component {
     const {
       __title,
       __description,
-      __tags,
+      __amount,
+      __type,
       __imgs
     } = this.state;
 
     return (
       <Event 
-        createEvent={() => this.createEvent()}
+        createEvent={this.createEvent}
 
         __title={__title}
         __description={__description}
-        __tags={__tags}
+        __type={__type}
         __imgs={__imgs}
+        __amount={__amount}
 
         onTitleChange={({target: {value: __title}}) => {
           this.setState({__title});
@@ -83,12 +94,13 @@ class EventContainer extends Component {
         onDescriptionChange={({target: {value: __description}}) => {
           this.setState({__description});
         }}
-        onTagsChange={({target: {value: __tags}}) => {
-          this.setState({__tags});
+        onTypeChange={({target: {value: __type}}) => {
+          this.setState({__type});
         }}
-        onImgChange={({target: {value: __imgs}}) => {
-          this.setState({__imgs});
+        onAmountChange={({target: {value: __amount}}) => {
+          this.setState({__amount});
         }}
+        onImgChange={(e) => this.fileOnChange(e)}
       />
     );
   }
