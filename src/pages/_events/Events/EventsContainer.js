@@ -35,12 +35,14 @@ class EventsContainer extends Component {
     };
   }
 
-  clickHandler = (id) => this.props.history.push(`/events/${id}`);
-
   render() {
     const {
       events
     } = this.state;
+
+    const {
+      history
+    } = this.props;
 
     return (
       <div className="events">
@@ -59,7 +61,7 @@ class EventsContainer extends Component {
         {
           events.map(event =>
             <Events
-              clickHandler={() => this.clickHandler(event._id)}
+              clickHandler={() => history.push(`/events/${event._id}`)}
               key={event._id}
               title={event.title}
               description={event.description}

@@ -101,7 +101,6 @@ const SignUp = ({
                   })}
                 >
                   <FontAwesomeIcon
-                      inverse transform="shrink-6"
                       size='2x'
                       color='white'
                       icon={['fab', 'telegram-plane']}

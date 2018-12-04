@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router';
-import Layout from '../../../components/_layout/Layout/Layout';
 
 class Create extends Component {
   constructor(props, context) {
