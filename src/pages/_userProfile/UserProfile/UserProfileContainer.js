@@ -15,7 +15,7 @@ class UserProfileContainer extends Component {
   }
 
   componentDidMount = () => {
-    fetchApiRequest(`/events/${this.props.userId}`, {
+    fetchApiRequest(`/events/created-by/${this.props.userId}`, {
       method: 'GET'
     })
     .then(response => {

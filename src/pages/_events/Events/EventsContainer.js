@@ -59,7 +59,7 @@ class EventsContainer extends Component {
     });
   }
 
-  clickHandler = (id) => this.props.history.push(`/events/${id}`);
+  clickHandler = (id) => this.props.history.push({pathname: `/events/${id}`, state: {id}});
 
   render() {
     const {
@@ -97,7 +97,7 @@ class EventsContainer extends Component {
         </div>
       </div>
     )
-    : (<div></div>);
+    : null;
   }
 }
 
