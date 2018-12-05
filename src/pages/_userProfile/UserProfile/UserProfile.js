@@ -2,10 +2,14 @@ import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './UserProfile.scss';
 
+import Events from '../../_events/Events/Events';
+
 const UserProfile = (props) => {
   const {
     createEvent,
-    userName
+    userName,
+    events,
+    clickHandler
   } = props;
 
   return (
@@ -31,6 +35,25 @@ const UserProfile = (props) => {
           Create event
         </button>
       </div>
+      {
+        events ? (
+          <div className="events-container">
+            <p className="events-text">Evenimentele create</p>
+            <div className="event-wrapper">
+              {events.map(event =>
+                <Events
+                  clickHandler={() => clickHandler(event._id)}
+                  key={event._id}
+                  title={event.title}
+                  description={event.description}
+                  tags={event.tags}
+                  img={event.images}
+                />
+              )}
+            </div>
+          </div>
+        ) : null
+      }
     </div>
   );
 };
