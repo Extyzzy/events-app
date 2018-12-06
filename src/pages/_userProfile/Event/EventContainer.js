@@ -15,10 +15,14 @@ class EventContainer extends Component {
       __title: '',
       __description: '',
       __tags: '',
-      __imgs: ''
+      __imgs: '',
+      __formattedAddress: null,
+      __latitude: null,
+      __longitude: null,
     };
 
     this.createFormData = this.createFormData.bind(this);
+    this.createEvent = this.createEvent.bind(this);
   }
 
   createFormData() {
@@ -65,17 +69,37 @@ class EventContainer extends Component {
       __title,
       __description,
       __tags,
-      __imgs
+      __imgs,
+        __formattedAddress,
+        __latitude,
+        __longitude,
     } = this.state;
 
     return (
       <Event 
-        createEvent={() => this.createEvent()}
+        createEvent={this.createEvent}
 
         __title={__title}
         __description={__description}
         __tags={__tags}
         __imgs={__imgs}
+        __formattedAddress={__formattedAddress}
+        __latitude={__latitude}
+        __longitude={__longitude}
+
+        setCoordinates={(
+            __latitude,
+            __longitude,
+            __formattedAddress,
+            __addressComponents,
+        ) => {
+            this.setState({
+                __latitude,
+                __longitude,
+                __formattedAddress,
+                __addressComponents,
+            });
+        }}
 
         onTitleChange={({target: {value: __title}}) => {
           this.setState({__title});

@@ -1,5 +1,8 @@
 import React , {Component} from 'react';
 import './Event.scss';
+import MapInput from './components/MapInput';
+import Geosuggest from 'react-geosuggest';
+
 
 class Event extends Component {
   render() {
@@ -12,7 +15,11 @@ class Event extends Component {
       __title,
       __description,
       __tags,
-      __imgs
+      __imgs,
+        __formattedAddress,
+        __latitude,
+        __longitude,
+        setCoordinates,
     } = this.props;
 
     return (
@@ -50,7 +57,20 @@ class Event extends Component {
             onChange={onImgChange}
             value={__imgs}
           />
-          <button className="event-creation__submit">Send data</button>
+
+            <Geosuggest />
+            <div className='mapInput'>
+                <MapInput
+                    sendCoordinates={setCoordinates}
+                    location={{lat: __latitude, lng: __longitude, formattedAddress: __formattedAddress}}
+                />
+            </div>
+          <button
+              className="event-creation__submit"
+              onClick={(e) => {
+                  createEvent(e);
+              }}
+          >Send data</button>
         </form>
       </div>
     );
