@@ -21,7 +21,7 @@ class Events extends Component {
             >
               <img 
                 className="event__image" 
-                src={ img }
+                src={'http://localhost:8080/uploads/' + img}
                 alt=''
               />
               <div className="event__tags">

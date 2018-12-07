@@ -10,16 +10,19 @@ class Event extends Component {
       createEvent,
       onTitleChange,
       onDescriptionChange,
-      onTagsChange,
+      onTypeChange,
+      onAmountChange,
       onImgChange,
       __title,
       __description,
       __tags,
-      __imgs,
         __formattedAddress,
         __latitude,
         __longitude,
         setCoordinates,
+      __type,
+      __amount,
+      __imgs
     } = this.props;
 
     return (
@@ -43,19 +46,25 @@ class Event extends Component {
             onChange={onDescriptionChange}
             value={__description}
           />
-          <label className="event-creation__label">Tags:</label>
+          <label className="event-creation__label">Type:</label>
           <input 
             className="event-creation__input"
             type="text"
-            onChange={onTagsChange}
-            value={__tags}
+            onChange={onTypeChange}
+            value={__type}
+          />
+          <label className="event-creation__label">Amount:</label>
+          <input 
+            className="event-creation__input"
+            type="number"
+            onChange={onAmountChange}
+            value={__amount}
           />
           <label className="event-creation__label">Image:</label>
           <input 
             className="event-creation__input"
             type="file"
             onChange={onImgChange}
-            value={__imgs}
           />
 
             <Geosuggest />

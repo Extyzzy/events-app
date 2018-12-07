@@ -19,40 +19,52 @@ class EventContainer extends Component {
       __formattedAddress: null,
       __latitude: null,
       __longitude: null,
+      __type: '',
+      __amount: 0
     };
 
-    this.createFormData = this.createFormData.bind(this);
-    this.createEvent = this.createEvent.bind(this);
-  }
+      this.createFormData = this.createFormData.bind(this);
+      this.createEvent = this.createEvent.bind(this);
+    };
 
-  createFormData() {
+  fileOnChange = (e) => (
+    this.setState({
+      __imgs: e.target.files[0]
+    })
+  );
+
+  createFormData = () => {
     const {
       __title,
       __description,
-      __tags,
+      __type,
       __imgs,
+      __amount,
     } = this.state;
 
     return appendToFormData(
       new FormData(),
       {
-        id: 1,
+        userId: this.props.userId,
+        type: __type,
         title: __title,
         description: __description,
-        tags: __tags,
-        imgs: __imgs,
+        amount: __amount,
+        images: __imgs,
       },
     );
-  }
+  };
 
-  createEvent(e) {
+  createEvent = (e) => {
+    alert('here');
     e.preventDefault();
-
+    alert('here2');
     fetchApiRequest('/event', {
       method: 'POST',
       body: this.createFormData(), 
     })
     .then(response => {
+      alert('here3');
       switch (response.status) {
         case 201:
           return console.log('Event created successfully');
@@ -62,31 +74,30 @@ class EventContainer extends Component {
           );
       }
     })
-  } 
+  };
 
   render() {
     const {
       __title,
-      __description,
       __tags,
-      __imgs,
-        __formattedAddress,
-        __latitude,
-        __longitude,
+      __formattedAddress,
+      __latitude,
+      __longitude,
+      __amount,
+      __type,
+      __imgs
     } = this.state;
-
+    console.info(2);
     return (
-      <Event 
-        createEvent={this.createEvent}
-
+      <Event
         __title={__title}
-        __description={__description}
-        __tags={__tags}
+        __type={__type}
         __imgs={__imgs}
         __formattedAddress={__formattedAddress}
         __latitude={__latitude}
         __longitude={__longitude}
-
+      __amount={__amount}
+      createEvent={this.createEvent}
         setCoordinates={(
             __latitude,
             __longitude,
@@ -107,20 +118,22 @@ class EventContainer extends Component {
         onDescriptionChange={({target: {value: __description}}) => {
           this.setState({__description});
         }}
-        onTagsChange={({target: {value: __tags}}) => {
-          this.setState({__tags});
+        onTypeChange={({target: {value: __type}}) => {
+          this.setState({__type});
         }}
-        onImgChange={({target: {value: __imgs}}) => {
-          this.setState({__imgs});
+        onAmountChange={({target: {value: __amount}}) => {
+          this.setState({__amount});
         }}
+        onImgChange={(e) => this.fileOnChange(e)}
       />
     );
-  }
+  };
 }
 
 function mapStateToProps(store) {
   return {
     isAuthenticated: store.auth.isAuthenticated,
+    userId: store.auth.id,
   };
 }
 
