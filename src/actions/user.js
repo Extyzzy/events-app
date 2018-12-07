@@ -83,6 +83,7 @@ export function loginUser(creds, onAuthFail = null) {
         body: creds,
       })
       .then(response => {
+
         console.log(`Response ${response}`);
         console.log(`Status ${response.status}`);
         switch (response.status) {
@@ -118,19 +119,8 @@ export function loginUser(creds, onAuthFail = null) {
             );
         }
       })
-      .then(auth => Promise.all([
-        auth,
-        // dispatch(fetchPersonalData(auth.accessToken)),
-      ]), () => {
-        if (onAuthFail instanceof Function) {
-          onAuthFail();
-        }
-
-        return Promise.reject(
-          new SilencedError('Authorization Failed.')
-        );
-      })
-      .then(([auth]) => {
+      .then(auth => {
+        console.info(auth);
         localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
         localStorage.setItem('ACCESS_TOKEN_EXPIRES_ON', auth.expiresIn);
 
