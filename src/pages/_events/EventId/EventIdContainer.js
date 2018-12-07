@@ -60,8 +60,6 @@ class EventIdContainer extends Component {
       img
     } = this.state;
 
-    console.log(title)
-
     return (
       <div>
         <EventId 

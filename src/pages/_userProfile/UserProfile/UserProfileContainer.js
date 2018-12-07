@@ -33,7 +33,7 @@ class UserProfileContainer extends Component {
         events: json
       })
     });
-  }
+  };
 
   createEvent = () => this.props.history.push(`/profile/event/create`);
 

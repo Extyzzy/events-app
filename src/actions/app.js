@@ -10,6 +10,8 @@ import {
     receiveLogin,
 } from './user';
 
+import moment from "moment";
+
 export const FETCH_INITIAL_STATE_REQUEST = 'FETCH_INITIAL_STATE_REQUEST';
 export const FETCH_INITIAL_STATE_COMPLETE = 'FETCH_INITIAL_STATE_COMPLETE';
 export const FETCH_INITIAL_STATE_FAILURE = 'FETCH_INITIAL_STATE_FAILURE';
@@ -50,25 +52,29 @@ export function fetchInitialStateError() {
 function fetchAuthState(resolve, reject) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
+  console.info(parseInt(expiresOn, 10));
+  console.info(moment().unix());
   return dispatch => {
     if (accessToken && expiresOn) {
-      if (parseInt(expiresOn, 10) > (new Date()).getTime()) {
+      if (parseInt(expiresOn, 10) > moment().unix()) {
         dispatch(receiveLogin(accessToken, expiresOn));
 
         resolve();
-      }
-      else {
+      } else {
+        console.info('as');
         // Blocking the call to refresh token
         return dispatch(refreshAccessToken())
           .then(() => resolve())
           .catch(e => {
-            localStorage.removeItem('ACCESS_TOKEN');
-            localStorage.removeItem('ACCESS_TOKEN_EXPIRES_ON');
+            console.info(e);
+            // localStorage.removeItem('ACCESS_TOKEN');
+           //  localStorage.removeItem('ACCESS_TOKEN_EXPIRES_ON');
 
             reject(new InvalidRefreshToken());
           });
 
       }
+
     }
 
     reject(new UndefinedAccessToken());
@@ -84,6 +90,7 @@ function fetchAuthState(resolve, reject) {
  */
 
  export function fetchInitialState() {
+
    return dispatch => {
      dispatch(requestFetchInitialState());
 
@@ -91,11 +98,10 @@ function fetchAuthState(resolve, reject) {
 
        // Try to fetch user data if is authed
        new Promise((resolve, reject) => {
+
          dispatch(fetchAuthState(resolve, reject));
+
        })
-       .then(() => dispatch(fetchPersonalData(
-         localStorage.getItem('ACCESS_TOKEN')
-       )))
        .then(data => ({data, status: 'RESOLVED'}))
        .catch(e => Promise.resolve({e, status: 'REJECTED'}))
      ])

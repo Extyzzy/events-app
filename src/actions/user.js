@@ -126,7 +126,6 @@ export function loginUser(creds, onAuthFail = null) {
         }
       })
       .then(auth => {
-        console.info(auth);
         localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
         localStorage.setItem('ACCESS_TOKEN_EXPIRES_ON', auth.expiresIn);
 
@@ -275,6 +274,7 @@ export function setUserData(data) {
  * @returns {function(*)}
  */
 export function fetchPersonalData(accessToken) {
+  console.info(accessToken);
   return dispatch => {
     return dispatch(
         fetchAuthorizedApiRequest('/v1/account/details', {

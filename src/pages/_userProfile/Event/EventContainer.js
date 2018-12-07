@@ -87,7 +87,7 @@ class EventContainer extends Component {
       __type,
       __imgs
     } = this.state;
-    console.info(2);
+
     return (
       <Event
         __title={__title}
