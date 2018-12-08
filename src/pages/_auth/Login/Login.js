@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from "classnames";
 
 import './Login.scss';
 
@@ -6,6 +7,8 @@ const Login = ({
    isFetching,
    __email,
    __password,
+   __emailInputHasContent,
+   __emailNotFound,
    onEmailChange,
    onPasswordChange,
    onSubmit
@@ -16,33 +19,51 @@ const Login = ({
         <img alt='' className="sign-up__image" />
       </div>
       <div className="sign-up__text-section sign-up__text-section--left">
-        <h2 className="sign-up__header-text sign-up__header-text--left">WELCOME BACK<br /> TO EVENTSBOOK</h2>
+        <h2 className="sign-up__header-text sign-up__header-text--left">Welcome back to EventsBook</h2>
         <p className="sign-up__description-text sign-up__description-text--left">
         Mereu în căutarea de experiențe noi reprezintă diviza platformei, ce are drept scop promovarea cât și organizarea, cu ajutorul organizatorilor.
         </p>
         <div className="sign-up__email">
           <form onSubmit={onSubmit}>
-            <label className="sign-up__label">Email</label>
+            <div className="input-component">
+              <div className="input-component__input-wrapper">
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  value={__email}
+                  spellCheck="false"
+                  autoComplete="username"
+                  onChange={onEmailChange}
+                  className="input-component__input"
+                  title="Enter your email address in this field."
+                />
+                <label
+                  htmlFor="email"
+                  className={classes("input-component__label", {
+                    "input-component__label--has-content": __emailInputHasContent
+                  })}
+                >
+                  Email
+                </label>
+              </div>
+              {__emailNotFound && (
+                <p className="input_component__error">
+                  Couldn't find your EventsBook account
+                </p>
+              )}
+            </div>
             <input
-              className="sign-up__input sign-up__input--second-form"
-              type="email"
-              value={__email}
               required
-              onChange={onEmailChange}
-            />
-            <label
-              className="sign-up__label"
-            >
-              Password
-            </label>
-            <input
-              className="sign-up__input sign-up__input--second-form"
               type="password"
-              required
-              onChange={onPasswordChange}
               value={__password}
+              onChange={onPasswordChange}
+              autoComplete="current-password"
+              className="sign-up__input sign-up__input--second-form"
             />
-            <button className="sign-up__submit">
+            <button 
+              className="sign-up__submit"
+              title="Please, fill all the fields above with valid information to continue.">
               Log In
             </button>
           </form>

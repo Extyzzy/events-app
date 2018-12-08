@@ -13,6 +13,9 @@ class LoginContainer extends Component {
     this.state = {
       __email: '',
       __password: '',
+      __emailNotFound: false,
+      __emailInputHasContent: false,
+      __passwordInputHasContent: false,
     };
 
     this.doLogin = this.doLogin.bind(this);
@@ -83,6 +86,8 @@ class LoginContainer extends Component {
     const {
       __email,
       __password,
+      __emailInputHasContent,
+      __emailNotFound,
     } = this.state;
 
     return (
@@ -92,8 +97,13 @@ class LoginContainer extends Component {
         errors={errors}
         __email={__email}
         __password={__password}
+        __emailInputHasContent={__emailInputHasContent}
+        __emailNotFound={__emailNotFound}
         onEmailChange={({target: {value: __email}}) => {
-          this.setState({__email});
+          this.setState({
+            __email, 
+            __emailInputHasContent: __email ? true : false
+          });
         }}
 
         onPasswordChange={({target: {value: __password}}) => {

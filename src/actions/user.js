@@ -103,7 +103,9 @@ export function loginUser(creds, onAuthFail = null) {
                 name
               };
             });
-
+          case 404:
+            return console.log(response);
+            
           case 422:
             return response.json().then(({
               errors
@@ -131,13 +133,14 @@ export function loginUser(creds, onAuthFail = null) {
 
         // Set required data & dispatch the success action
 
-        //dispatch(setUserData(userData));
+        dispatch(setUserData({
+          id: auth.id,
+          name: auth.name
+        }));
 
         dispatch(receiveLogin(
           auth.accessToken,
-          auth.expiresIn,
-          auth.id,
-          auth.name
+          auth.expiresIn
         ));
 
         return Promise.resolve();

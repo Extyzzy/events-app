@@ -52,8 +52,7 @@ export function fetchInitialStateError() {
 function fetchAuthState(resolve, reject) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
-  console.info(parseInt(expiresOn, 10));
-  console.info(moment().unix());
+
   return dispatch => {
     if (accessToken && expiresOn) {
       if (parseInt(expiresOn, 10) > moment().unix()) {
@@ -61,7 +60,6 @@ function fetchAuthState(resolve, reject) {
 
         resolve();
       } else {
-        console.info('as');
         // Blocking the call to refresh token
         return dispatch(refreshAccessToken())
           .then(() => resolve())

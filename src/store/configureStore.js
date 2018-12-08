@@ -15,8 +15,8 @@ export default function configureStore(initialState, helpersConfig) {
 
     // https://github.com/zalmoxisus/redux-devtools-extension#redux-devtools-extension
     let devToolsExtension = f => f;
-    if (window.devToolsExtension) {
-      devToolsExtension = window.devToolsExtension();
+    if (window.window.__REDUX_DEVTOOLS_EXTENSION__) {
+      devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__();
     }
 
     enhancer = compose(

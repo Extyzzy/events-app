@@ -1,136 +1,75 @@
-// @import '../../../styles/app';
+@import '../../../styles/app';
+@import '../../../styles/new/_variables';
 
-// button:active,
-// button:focus {
-//   outline: none;
-// }
+.input-component__input {
+  background-color: transparent;
+  border: 1px solid $color-gray-thin;
+  border-radius: 2px;
+  color: $color-gray-thin;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 20px 20px;
+  transition: color 250ms ease,
+              border-color 250ms ease;
+  width: 100%;
+}
 
-// .sign-up__container {
-//   align-items: center;
-//   display: flex;
-//   justify-content: space-between;
-//   margin: 120px auto 0;
-//   max-width: 1280px;
-// }
+.input-component__input-wrapper {
+  margin-bottom: 15px;
+  position: relative;
+  width: 100%;
+}
 
-// .sign-up__image {
-//   background-color: #707070; 
-//   height: 615px;
-//   width: 615px;
-// }
+.input-component__input:focus {
+  border-color: $color-gray-medium;
+  color: $color-gray-medium;
+  outline: none;
+}
 
-// .sign-up__text-section {
-//   align-items: center;
-//   display: flex;
-//   flex-direction: column;
-//   padding: 80px;
-// }
+.input-component__input:focus + .input-component__label {
+  color: $color-gray-medium;
+  font-size: 10px;
+  top: -20px;
+}
 
-// .sign-up__text-section--left {
-//   align-items: flex-start;
-// }
+.input-component__input:valid {
+  border-color: $color-magento;
+  color: $color-magento;
+}
 
-// .sign-up__header-text {
-//   color: #707070;
-//   font-family: Roboto;
-//   font-size: 42px;
-//   font-weight: 900;
-//   letter-spacing: 0.045em;
-//   margin-bottom: 40px;
-//   text-transform: uppercase;
-// }
+.input-component__input:valid + .input-component__label {
+  color: $color-magento;
+}
 
-// .sign-up__description-text {
-//   color: #707070;
-//   font-family: Roboto;
-//   font-size: 16px;
-//   font-weight: 400;
-//   line-height: 32px;
-//   margin-bottom: 60px;
-//   text-align: center;
-// }
+.input-component__label {
+  color: $color-gray-thin;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  left: 22px;
+  letter-spacing: 0.025em;
+  line-height: 11px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: top 250ms ease,
+              font-size 250ms ease,
+              color 250ms ease;
+  z-index: -1;
+}
 
-// .sign-up__header-text--left,
-// .sign-up__description-text--left {
-//   text-align: left;
-// }
+.input-component__label--has-content {
+  font-size: 10px;
+  top: -20px;
+}
 
-// .sign-up__email {
-//   margin-bottom: 20px;
-//   position: relative;
-//   width: 435px;
-// }
-
-// .sign-up__input {
-//   border: 1px solid #707070;
-//   border-radius: 3px;
-//   color: #707070;
-//   font-family: Roboto;
-//   font-size: 14px;
-//   font-weight: 700;
-//   height: 50px;
-//   padding: 0 90px 0 20px;
-//   width: 100%;
-// }
-
-// .sign-up__input {
-//   outline: none;
-// }
-
-// .sign-up__input--second-form {
-//   margin-bottom: 25px;
-// }
-
-// .sign-up__submit-email {
-//   background-color: #707070;
-//   border: none;
-//   border-radius: 0 3px 3px 0; 
-//   height: 50px;
-//   position: absolute;
-//   right: 0;
-//   top: 0;
-//   width: 75px;  
-// }
-
-// .sign-up__submit-email:hover,
-// .sign-up__submit-google:hover {
-//   cursor: pointer;
-// }
-
-// .sign-up__submit-email--succes {
-//   border-radius: 3px;
-//   width: 100%;
-// }
-
-// .sign-up__submit-google {
-//   background-color: #707070;
-//   border: none;
-//   border-radius: 3px;
-//   color: #ffffff;
-//   height: 50px;
-//   font-family: Roboto;
-//   font-size: 12px;
-//   font-weight: 900;
-//   letter-spacing: 0.035em;
-//   text-transform: uppercase;
-//   width: 435px;
-// }
-
-// .sign-up__label {
-//   color: #707070;
-//   display: block;
-//   font-family: Roboto, sans-serif;
-//   font-size: 11px;
-//   font-weight: 700;
-//   letter-spacing: 0.05em;
-//   margin: 0 0 10px;
-//   text-transform: uppercase;
-// }
-
-// .sign-up__label--green {
-//   color: green;
-// }
-
-// .sign-up__label--red {
-//   color: red;
-// }
+.input_component__error {
+  color: $color-gray-medium;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  margin: 0 0 20px 20px;
+}

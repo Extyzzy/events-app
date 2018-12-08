@@ -4,7 +4,7 @@ import {
 } from '../actions/user';
 
 export default function user(state = {
-    jenea: false,
+  id: false
 }, action) {
   switch (action.type) {
 
