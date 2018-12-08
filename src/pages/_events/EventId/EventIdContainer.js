@@ -27,8 +27,15 @@ class EventIdContainer extends Component {
       tags,
       img
     } = this.state;
+    console.log(this.props);
+    const {
+      id
+    } = this.props.location.state;
 
-    fetchApiRequest(`/events/${this.props.location.state.id}`, {
+
+    console.log('PROPS OF LOCATION:', this.props.location.state.id);
+
+    fetchApiRequest(`/events/${id}`, {
       method: 'GET'
     })
     .then(response => {
@@ -80,4 +87,3 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(connect(mapStateToProps)(EventIdContainer));
-

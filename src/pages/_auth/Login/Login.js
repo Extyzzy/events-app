@@ -11,12 +11,17 @@ const Login = ({
    __emailNotFound,
    onEmailChange,
    onPasswordChange,
-   onSubmit
+   onSubmit,
+   errors,
 }) => (
   <div className='sign-up'>
     <div className="sign-up__container">
       <div className="sign-up__image-section">
-        <img alt='' className="sign-up__image" />
+        <img
+          alt="happy-people"
+          className="sign-up__image"
+          src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80"
+        />
       </div>
       <div className="sign-up__text-section sign-up__text-section--left">
         <h2 className="sign-up__header-text sign-up__header-text--left">Welcome back to EventsBook</h2>
@@ -47,7 +52,7 @@ const Login = ({
                   Email
                 </label>
               </div>
-              {__emailNotFound && (
+              {errors === 'Email not found' && (
                 <p className="input_component__error">
                   Couldn't find your EventsBook account
                 </p>

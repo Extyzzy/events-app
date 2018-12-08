@@ -37,7 +37,7 @@ class UserProfileContainer extends Component {
 
   createEvent = () => this.props.history.push(`/profile/event/create`);
 
-  clickHandler = (id) => this.props.history.push(`/events/${id}`);
+  clickHandler = (id) => this.props.history.push({pathname: `/events/${id}`, state: {id}});
 
   render() {
     const {
@@ -62,8 +62,8 @@ class UserProfileContainer extends Component {
 function mapStateToProps(store) {
   return {
     isAuthenticated: store.auth.isAuthenticated,
-    name: store.auth.name,
-    userId: store.auth.id
+    name: store.user.name,
+    userId: store.user.id
   };
 }
 

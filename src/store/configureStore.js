@@ -15,7 +15,7 @@ export default function configureStore(initialState, helpersConfig) {
 
     // https://github.com/zalmoxisus/redux-devtools-extension#redux-devtools-extension
     let devToolsExtension = f => f;
-    if (window.window.__REDUX_DEVTOOLS_EXTENSION__) {
+    if (window.__REDUX_DEVTOOLS_EXTENSION__) {
       devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__();
     }
 

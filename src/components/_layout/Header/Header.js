@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import classes from "classnames";
+
 import './Header.scss';
 
 class Header extends Component {
@@ -21,11 +23,18 @@ class Header extends Component {
     super(props, context);
 
     this.state = {
-      isOpen: false,
+			isOpen: false,
+			activePage: this.props.location.pathname.split('/')[1],
     };
 
     this.headerDropdownToggle = this.headerDropdownToggle.bind(this);
-  }
+	}
+	
+	componentWillReceiveProps = (props, state) => {
+		this.setState({
+			activePage: props.location.pathname.split('/')[1],
+		});
+	}
 
   headerDropdownToggle(headerDropdownOpened) {
     this.setState({
@@ -37,25 +46,43 @@ class Header extends Component {
     const {
       isAuthenticated,
       history
-    } = this.props;
+		} = this.props;
+		
+		const {
+			activePage
+		} = this.state;
 
     return (
       <nav className="nav">
         <div className="nav__container">
           <h1>Events<span>BOOK</span></h1>
 
-          <menu className="nav__menu">
-            <li className="nav__menu-item">
-              <span onClick={() => history.push('/')} className="nav__menu-link nav__menu-link--active">Home</span>
+					<menu className="nav__menu">
+						<li className="nav__menu-item">
+							<span
+								onClick={() => history.push('/')}
+								className={classes("nav__menu-link", {
+									"nav__menu-link--active": activePage === ''
+								})}
+							>
+								Home
+							</span>
+						</li>
+						<li className="nav__menu-item">
+							<span
+								onClick={() => history.push('/events')}
+								className={classes("nav__menu-link", {
+									"nav__menu-link--active": activePage === 'events'
+								})}
+							>
+								Events
+							</span>
             </li>
             <li className="nav__menu-item">
-              <span onClick={() => history.push('/events')} className="nav__menu-link">Events</span>
+              <span className="nav__menu-link">Why EventsBook</span>
             </li>
             <li className="nav__menu-item">
-              <span  className="nav__menu-link">Why EventsBook</span>
-            </li>
-            <li className="nav__menu-item">
-              <span  className="nav__menu-link">News</span>
+              <span className="nav__menu-link">News</span>
             </li>
             <li className="nav__menu-item">
               <span className="nav__menu-link">Blog</span>
@@ -66,7 +93,9 @@ class Header extends Component {
               !isAuthenticated && (
                 <div className="nav__auth">
                   <span
-                    className="nav__link nav__link--log-in"
+										className={classes("nav__link nav__link--log-in", {
+											"nav__menu-link--active": activePage === 'log-in'
+										})}
                     onClick={() => history.push('/log-in')}
                   >
                     Log in

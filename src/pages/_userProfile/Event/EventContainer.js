@@ -133,7 +133,7 @@ class EventContainer extends Component {
 function mapStateToProps(store) {
   return {
     isAuthenticated: store.auth.isAuthenticated,
-    userId: store.auth.id,
+    userId: store.user.id,
   };
 }
 

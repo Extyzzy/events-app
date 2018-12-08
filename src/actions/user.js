@@ -104,7 +104,15 @@ export function loginUser(creds, onAuthFail = null) {
               };
             });
           case 404:
-            return console.log(response);
+            return response.json()
+            .then(({errors}) => {
+              dispatch(loginError(errors));
+
+              return Promise.reject(
+                new UnprocessableEntity()
+              );
+            })
+            .catch ((err => console.log('Email not found or something....')));
             
           case 422:
             return response.json().then(({
@@ -144,7 +152,8 @@ export function loginUser(creds, onAuthFail = null) {
         ));
 
         return Promise.resolve();
-      });
+      })
+      .catch ((err => console.log('Email not found or something....')));
   };
 }
 
@@ -217,7 +226,6 @@ export function refreshAccessToken() {
       .then(response => {
         switch (response.status) {
           case 200:
-
             return response.json()
               .then(({
                 access_token: accessToken,
@@ -235,11 +243,9 @@ export function refreshAccessToken() {
               });
 
           default:
-
             return Promise.reject(
               new InvalidRefreshToken()
             );
-
         }
       })
       .then(({
