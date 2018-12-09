@@ -40,33 +40,6 @@ export function fetchInitialStateError() {
 }
 
 /**
- * Fetch auth state. Method is meant to be
- * used in a new Promise.
- *
- * Note! This method must be dispatched.
- *
- * @param resolve
- * @param reject
- * @returns {function(*)}
- */
-function fetchAuthState() {
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
-
-  return dispatch => {
-    if (accessToken && expiresOn) {
-      if (parseInt(expiresOn, 10) > moment().unix()) {
-        dispatch(receiveLogin(accessToken, expiresOn))
-      } else {
-        return dispatch(refreshAccessToken())
-      }
-    }
-
-    new UndefinedAccessToken();
-  };
-}
-
-/**
  * Fetch initial app state.
  *
  * Note! This method must be dispatched.
@@ -75,24 +48,26 @@ function fetchAuthState() {
  */
 
 export function fetchInitialState() {
-  return async  dispatch => {
-    await dispatch(requestFetchInitialState());
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
 
-        // Try to fetch user data if is authed
+  return async dispatch => {
+    try {
+          await dispatch(requestFetchInitialState());
 
-      await dispatch(fetchAuthState());
+          if (accessToken && expiresOn) {
+              if (parseInt(expiresOn, 10) > moment().unix()) {
+                  await dispatch(receiveLogin(accessToken, expiresOn));
+                  await dispatch(fetchPersonalData(accessToken))
+              } else {
+                  return await dispatch(refreshAccessToken())
+              }
+          }
 
-      const accessToken = localStorage.getItem('ACCESS_TOKEN');
-      const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
-
-      if (accessToken && expiresOn)
-        dispatch(fetchPersonalData(accessToken))
-
-      .then(() => {
-        return dispatch(receiveInitialState());
-      })
-      .catch(() => {
+          return dispatch(receiveInitialState())
+      } catch(error) {
+        console.info(error);
         return dispatch(fetchInitialStateError());
-      });
+      }
   }
-};
+}
