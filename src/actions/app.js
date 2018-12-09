@@ -4,10 +4,10 @@ import {
 } from '../exceptions/auth';
 
 import {
-    refreshAccessToken,
-    fetchPersonalData,
-    setUserData,
-    receiveLogin,
+  refreshAccessToken,
+  fetchPersonalData,
+  setUserData,
+  receiveLogin,
 } from './user';
 
 import moment from "moment";
@@ -66,7 +66,7 @@ function fetchAuthState(resolve, reject) {
           .catch(e => {
             console.info(e);
             // localStorage.removeItem('ACCESS_TOKEN');
-           //  localStorage.removeItem('ACCESS_TOKEN_EXPIRES_ON');
+            //  localStorage.removeItem('ACCESS_TOKEN_EXPIRES_ON');
 
             reject(new InvalidRefreshToken());
           });
@@ -87,41 +87,38 @@ function fetchAuthState(resolve, reject) {
  * @returns {function(*)}
  */
 
- export function fetchInitialState() {
+export function fetchInitialState() {
 
-   return dispatch => {
-     dispatch(requestFetchInitialState());
 
-     return Promise.all([
 
-       // Try to fetch user data if is authed
-       new Promise((resolve, reject) => {
+  return dispatch => {
+    const accessToken = localStorage.getItem('ACCESS_TOKEN');
+    const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
+    dispatch(requestFetchInitialState());
 
-         dispatch(fetchAuthState(resolve, reject));
-
-       })
-       .then(data => ({data, status: 'RESOLVED'}))
-       .catch(e => Promise.resolve({e, status: 'REJECTED'}))
-     ])
-     .then(([{data: userData, status: userStatus}]) => {
-
-       /**
-        * TODO
-        * Load translations from api.
-        */
-
-       // Set user data only if we succeed in previous step
-       if (userStatus === 'RESOLVED') {
-         dispatch(setUserData(userData));
-       }
-
-       return Promise.resolve();
-     })
-     .then(() => {
-       return dispatch(receiveInitialState());
-     })
-     .catch(() => {
-       return dispatch(fetchInitialStateError());
-     });
-   };
- }
+    return Promise.all([
+        // Try to fetch user data if is authed
+        new Promise((resolve, reject) => {
+          if (accessToken && expiresOn) {
+            dispatch(fetchPersonalData(accessToken));
+          }
+          dispatch(fetchAuthState(resolve, reject));
+        })
+        .then(data => ({
+          data,
+          status: 'RESOLVED'
+        }))
+        .catch(e => Promise.resolve({
+          e,
+          status: 'REJECTED'
+        }))
+      ])
+      .then(() => {
+        Promise.resolve();
+        return dispatch(receiveInitialState());
+      })
+      .catch(() => {
+        return dispatch(fetchInitialStateError());
+      });
+  }
+};
