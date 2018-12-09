@@ -38,6 +38,7 @@ class EventsContainer extends Component {
     };
   }
 
+<<<<<<< HEAD
   componentDidMount = () => {
     fetchApiRequest('/events', {
       method: 'GET'
@@ -61,13 +62,23 @@ class EventsContainer extends Component {
 
   clickHandler = (id) => this.props.history.push({pathname: `/events/${id}`, state: {id}});
 
+=======
+>>>>>>> dedb15cd66ed14925edae3c973cd5a95ba4bab1b
   render() {
     const {
       events
     } = this.state;
 
+<<<<<<< HEAD
     return events ?
      (
+=======
+    const {
+      history
+    } = this.props;
+
+    return (
+>>>>>>> dedb15cd66ed14925edae3c973cd5a95ba4bab1b
       <div className="events">
       <div className="events__container">
         <div className="events__header">
@@ -84,7 +95,7 @@ class EventsContainer extends Component {
         {
           events.map(event =>
             <Events
-              clickHandler={() => this.clickHandler(event._id)}
+              clickHandler={() => history.push(`/events/${event._id}`)}
               key={event._id}
               title={event.title}
               description={event.description}

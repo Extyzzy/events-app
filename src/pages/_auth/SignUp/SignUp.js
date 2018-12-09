@@ -125,8 +125,26 @@ const SignUp = ({
                   color="white"
                   icon={["fab", "telegram-plane"]}
                 />
+<<<<<<< HEAD
               </button>
             </form>
+=======
+                <button
+                  className={classes("sign-up__submit-email", {
+                    "sign-up__submit-email--succes": __emailSentSucces,
+                  })}
+                >
+                  <FontAwesomeIcon
+                      size='2x'
+                      color='white'
+                      icon={['fab', 'telegram-plane']}
+                  />
+                </button>
+
+              </form>
+            </div>
+            <button className="sign-up__submit-google">Sign Up With Google</button>
+>>>>>>> dedb15cd66ed14925edae3c973cd5a95ba4bab1b
           </div>
           <button className="sign-up__submit sign-up__submit--google">
             Sign Up With Google

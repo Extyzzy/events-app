@@ -16,7 +16,6 @@
     "prop-types": "^15.6.2",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
-    "react-geosuggest": "^2.9.0",
     "react-google-maps": "^9.4.5",
     "react-redux": "^5.1.0",
     "react-router": "^4.3.1",
