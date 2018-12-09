@@ -27,13 +27,10 @@ class EventIdContainer extends Component {
       tags,
       img
     } = this.state;
-    console.log(this.props);
+    
     const {
       id
     } = this.props.location.state;
-
-
-    console.log('PROPS OF LOCATION:', this.props.location.state.id);
 
     fetchApiRequest(`/events/${id}`, {
       method: 'GET'
