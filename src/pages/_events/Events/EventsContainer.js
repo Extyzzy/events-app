@@ -62,7 +62,7 @@ class EventsContainer extends Component {
         {
           events.map(event =>
             <Events
-              clickHandler={() => history.push({pathname: `/events/${event._id}`, state: event._id})}
+              clickHandler={() => history.push({pathname: `/events/${event._id}`, state: {id: event._id}})}
               key={event._id}
               title={event.title}
               description={event.description}
