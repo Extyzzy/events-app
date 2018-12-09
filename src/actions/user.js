@@ -277,7 +277,9 @@ export function setUserData(data) {
  * @returns {function(*)}
  */
 export function fetchPersonalData(accessToken) {
+
   return dispatch => {
+      console.info('[pizd',accessToken);
     return dispatch(
         fetchAuthorizedApiRequest('/user/details', {
           headers: {

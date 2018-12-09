@@ -53,15 +53,15 @@ function fetchAuthState(resolve, reject) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
 
-  return async dispatch => {
+  return dispatch => {
     if (accessToken && expiresOn) {
       if (parseInt(expiresOn, 10) > moment().unix()) {
 
-        await dispatch(fetchPersonalData(accessToken));
 
-        await dispatch(receiveLogin(accessToken, expiresOn));
+         dispatch(fetchPersonalData(accessToken))
+         .then(() =>  dispatch(receiveLogin(accessToken, expiresOn)))
+         .then(() => resolve())
 
-        resolve();
       } else {
         // Blocking the call to refresh token
         return dispatch(refreshAccessToken())
