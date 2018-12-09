@@ -53,10 +53,13 @@ function fetchAuthState(resolve, reject) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
 
-  return dispatch => {
+  return async dispatch => {
     if (accessToken && expiresOn) {
       if (parseInt(expiresOn, 10) > moment().unix()) {
-        dispatch(receiveLogin(accessToken, expiresOn));
+
+        await dispatch(fetchPersonalData(accessToken));
+
+        await dispatch(receiveLogin(accessToken, expiresOn));
 
         resolve();
       } else {
@@ -88,20 +91,13 @@ function fetchAuthState(resolve, reject) {
  */
 
 export function fetchInitialState() {
-
-
-
   return dispatch => {
-    const accessToken = localStorage.getItem('ACCESS_TOKEN');
-    const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
     dispatch(requestFetchInitialState());
 
     return Promise.all([
         // Try to fetch user data if is authed
         new Promise((resolve, reject) => {
-          if (accessToken && expiresOn) {
-            dispatch(fetchPersonalData(accessToken));
-          }
+
           dispatch(fetchAuthState(resolve, reject));
         })
         .then(data => ({

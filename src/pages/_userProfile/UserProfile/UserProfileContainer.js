@@ -15,24 +15,25 @@ class UserProfileContainer extends Component {
   }
 
   componentDidMount = () => {
-    console.info(this.props.userId);
-    fetchApiRequest(`/events/created-by/${this.props.userId}`, {
-      method: 'GET'
+    const {userId} = this.props;
+    console.info(userId);
+    fetchApiRequest(`/events/created-by/${userId}`, {
+        method: 'GET'
     })
     .then(response => {
-      switch (response.status) {
-        case 200:
-          console.log('succes');
-          return response.json();
+        switch (response.status) {
+            case 200:
+                console.log('succes');
+                return response.json();
 
-        default:
-          return console.log('ERRRRRRRR');
-      }
+            default:
+                return console.log('ERRRRRRRR');
+        }
     })
     .then(json => {
-      this.setState({
-        events: json
-      })
+        this.setState({
+            events: json
+        })
     });
   };
 
@@ -42,13 +43,13 @@ class UserProfileContainer extends Component {
 
   render() {
     const {
-      name
+      name,
     } = this.props;
 
     const {
       events
     } = this.state;
-    
+
     return (
       <UserProfile 
         createEvent={() => this.createEvent()}

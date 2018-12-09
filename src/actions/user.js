@@ -132,15 +132,15 @@ export function loginUser(creds, onAuthFail = null) {
             );
         }
       })
-      .then(auth => {
+      .then(async auth => {
         localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
         localStorage.setItem('ACCESS_TOKEN_EXPIRES_ON', auth.expiresIn);
 
         // Set required data & dispatch the success action
 
-        dispatch(fetchPersonalData(auth.accessToken));
+        await dispatch(fetchPersonalData(auth.accessToken));
 
-        dispatch(receiveLogin(
+        await dispatch(receiveLogin(
           auth.accessToken,
           auth.expiresIn
         ));
@@ -277,7 +277,6 @@ export function setUserData(data) {
  * @returns {function(*)}
  */
 export function fetchPersonalData(accessToken) {
-  console.info(accessToken);
   return dispatch => {
     return dispatch(
         fetchAuthorizedApiRequest('/user/details', {

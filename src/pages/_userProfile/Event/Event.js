@@ -1,7 +1,6 @@
 import React , {Component} from 'react';
 import './Event.scss';
 import MapInput from './components/MapInput';
-import Geosuggest from 'react-geosuggest';
 
 
 class Event extends Component {
@@ -67,7 +66,7 @@ class Event extends Component {
             onChange={onImgChange}
           />
 
-            <Geosuggest />
+
             <div className='mapInput'>
                 <MapInput
                     sendCoordinates={setCoordinates}
