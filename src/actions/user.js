@@ -85,9 +85,6 @@ export function loginUser(creds, onAuthFail = null) {
         body: creds,
       })
       .then(response => {
-
-        console.log(`Response ${response}`);
-        console.log(`Status ${response.status}`);
         switch (response.status) {
           case 200:
             return response.json().then(({
@@ -141,10 +138,7 @@ export function loginUser(creds, onAuthFail = null) {
 
         // Set required data & dispatch the success action
 
-        dispatch(setUserData({
-          id: auth.id,
-          name: auth.name
-        }));
+        dispatch(fetchPersonalData(auth.accessToken));
 
         dispatch(receiveLogin(
           auth.accessToken,
@@ -286,7 +280,7 @@ export function fetchPersonalData(accessToken) {
   console.info(accessToken);
   return dispatch => {
     return dispatch(
-        fetchAuthorizedApiRequest('/v1/account/details', {
+        fetchAuthorizedApiRequest('/user/details', {
           headers: {
             'Authorization': `Bearer ${accessToken}`,
           },
@@ -301,7 +295,9 @@ export function fetchPersonalData(accessToken) {
               new SilencedError('Failed to fetch personal details.')
             );
         }
-      });
+      })
+      .then(data => dispatch(setUserData(data)))
+      .catch(err => console.info(err));
   };
 }
 

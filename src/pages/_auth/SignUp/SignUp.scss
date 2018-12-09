@@ -14,7 +14,7 @@ button:focus {
 }
 
 .sign-up__image-section {
-  font-size: 0;
+  font-size: 0; // fixes the image space
   height: 100%;
   width: 100%;
 }

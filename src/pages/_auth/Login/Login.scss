@@ -31,7 +31,8 @@
 .input-component__input:focus + .input-component__label {
   color: $color-gray-medium;
   font-size: 10px;
-  top: -20px;
+  opacity: 0.5;
+  top: 12px;
 }
 
 .input-component__input:valid {
@@ -61,8 +62,8 @@
 }
 
 .input-component__label--has-content {
-  font-size: 10px;
-  top: -20px;
+  opacity: 0.5;
+  top: 12px;
 }
 
 .input_component__error {
