@@ -74,9 +74,7 @@ class App extends Component {
     } = this.props;
 
     if (isFetching) {
-      return (
-        <Loader />
-      );
+      return null
     }
 
     return (

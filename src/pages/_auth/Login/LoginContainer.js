@@ -4,7 +4,7 @@ import { withRouter, Redirect } from 'react-router';
 
 import Login from './Login';
 import { appendToFormData } from '../../../helpers/form';
-import { loginUser, clearLoginErrors } from '../../../actions/user';
+import {loginUser, clearLoginErrors, fetchPersonalData} from '../../../actions/user';
 
 class LoginContainer extends Component {
   constructor(props, context) {
@@ -55,6 +55,7 @@ class LoginContainer extends Component {
     if (isFetching) {
       return false;
     }
+
 
     dispatch(
       loginUser(

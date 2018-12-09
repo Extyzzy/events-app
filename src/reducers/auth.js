@@ -28,8 +28,6 @@ export default function auth(state = {
         loginErrors: null,
         accessToken: action.accessToken,
         accessTokenExpiresOn: action.accessTokenExpiresOn,
-        id: action.id,
-        name: action.name
       });
     case LOGIN_FAILURE:
       return Object.assign({}, state, {

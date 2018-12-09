@@ -49,36 +49,20 @@ export function fetchInitialStateError() {
  * @param reject
  * @returns {function(*)}
  */
-function fetchAuthState(resolve, reject) {
+function fetchAuthState() {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
 
   return dispatch => {
     if (accessToken && expiresOn) {
       if (parseInt(expiresOn, 10) > moment().unix()) {
-
-
-         dispatch(fetchPersonalData(accessToken))
-         .then(() =>  dispatch(receiveLogin(accessToken, expiresOn)))
-         .then(() => resolve())
-
+        dispatch(receiveLogin(accessToken, expiresOn))
       } else {
-        // Blocking the call to refresh token
         return dispatch(refreshAccessToken())
-          .then(() => resolve())
-          .catch(e => {
-            console.info(e);
-            // localStorage.removeItem('ACCESS_TOKEN');
-            //  localStorage.removeItem('ACCESS_TOKEN_EXPIRES_ON');
-
-            reject(new InvalidRefreshToken());
-          });
-
       }
-
     }
 
-    reject(new UndefinedAccessToken());
+    new UndefinedAccessToken();
   };
 }
 
@@ -91,26 +75,20 @@ function fetchAuthState(resolve, reject) {
  */
 
 export function fetchInitialState() {
-  return dispatch => {
-    dispatch(requestFetchInitialState());
+  return async  dispatch => {
+    await dispatch(requestFetchInitialState());
 
-    return Promise.all([
         // Try to fetch user data if is authed
-        new Promise((resolve, reject) => {
 
-          dispatch(fetchAuthState(resolve, reject));
-        })
-        .then(data => ({
-          data,
-          status: 'RESOLVED'
-        }))
-        .catch(e => Promise.resolve({
-          e,
-          status: 'REJECTED'
-        }))
-      ])
+      await dispatch(fetchAuthState());
+
+      const accessToken = localStorage.getItem('ACCESS_TOKEN');
+      const expiresOn = localStorage.getItem('ACCESS_TOKEN_EXPIRES_ON');
+
+      if (accessToken && expiresOn)
+        dispatch(fetchPersonalData(accessToken))
+
       .then(() => {
-        Promise.resolve();
         return dispatch(receiveInitialState());
       })
       .catch(() => {

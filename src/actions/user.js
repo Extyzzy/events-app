@@ -40,13 +40,11 @@ function requestLogin() {
   };
 }
 
-export function receiveLogin(accessToken, accessTokenExpiresOn, id, name) {
+export function receiveLogin(accessToken, accessTokenExpiresOn) {
   return {
     type: LOGIN_SUCCESS,
     accessToken,
     accessTokenExpiresOn,
-    id,
-    name
   };
 }
 
@@ -279,7 +277,6 @@ export function setUserData(data) {
 export function fetchPersonalData(accessToken) {
 
   return dispatch => {
-      console.info('[pizd',accessToken);
     return dispatch(
         fetchAuthorizedApiRequest('/user/details', {
           headers: {
